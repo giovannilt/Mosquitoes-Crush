@@ -13,6 +13,8 @@
 #import "GameOver.h"
 #import "Game.h"
 #import "GiftSprite.h"
+#import "HeartGift.h"
+#import "SprayGift.h"
 
 @interface Playground()
 -(void) sucked:(SuckedEvent*) event;
@@ -23,18 +25,17 @@
 -(void) showCombo;
 -(void) removeMosquito:(MosquitoSprite*) mosquito;
 -(void) placeGiftAtX:(double) x Y:(double) y Width:(double) w andHeight:(double) h;
--(void) onGiftActivated:(SPEvent*) event;
 @end
 
 @implementation Playground
 
-@synthesize statsHeight, colors, juggler = mJuggler, canSuck;
+@synthesize statsHeight, colors, juggler = mJuggler, canSuck, life;
 
 - (id)initWithWidth:(float) width andHeight:(float) height
 {
     self = [super init];
     if (self) {
-        self.canSuck = NO;
+        self.canSuck = YES;
         combo = 1;
         gMsg = nil;
         countHit = 0;
@@ -47,6 +48,9 @@
         self.width = width;
         self.height = height;
         
+        spraybckImg = [SPImage imageWithTexture:[Game texture:@"spraygamebg"]];
+        [self addChild:spraybckImg];
+
         bckImg = [SPImage imageWithTexture:[Game texture:@"gamebg"]];
         [self addChild:bckImg];
         
@@ -110,6 +114,12 @@
     }
     
     return self;
+}
+
+-(void)swapBG {
+    SPTween* tween = [SPTween tweenWithTarget:bckImg time:0.3];
+    [tween animateProperty:@"alpha" targetValue:1 - bckImg.alpha];
+    [mJuggler addObject:tween];
 }
 
 -(void) launchMosquitoAtX:(double) x andY:(double) y {
@@ -184,29 +194,34 @@
 }
 
 -(void)placeGiftAtX:(double)x Y:(double)y Width:(double)w andHeight:(double)h{
-    w = w/2.0;
-    h = h/2.0;
-    x = x + w/2.0;
-    y = y + h/2.0;
-    GiftSprite* gift = [[GiftSprite alloc] initWithImgName:@"heart" Width:w Height:h];
-    gift.x = x;
-    gift.y = y;
-    [self addChild:gift];
-    [gifts addObject:gift];
-    [gift addEventListener:@selector(onGiftActivated:) atObject:self forType:EVENT_GIFT_ACTIVATED];
-    [gift animate];
-    [gift release];
+    double probGift = arc4random()%1000/1000.0;
+    if (probGift < 1) {
+        w = w/2.0;
+        h = h/2.0;
+        x = x + w/2.0;
+        y = y + h/2.0;
+        SprayGift* gift = nil;
+        double probKind = arc4random()%1000/1000.0;
+        if (probKind <= 0.7) {
+            gift = [[HeartGift alloc] initWithWidth:w Height:h];
+        } else {
+            gift = [[SprayGift alloc] initWithWidth:w Height:h];
+        }
+        gift.x = x;
+        gift.y = y;
+        [self addChild:gift];
+        [gifts addObject:gift];
+        [gift animate];
+        [gift release];
+    }
 }
 
--(void)onGiftActivated:(SPEvent *)event {
-    GiftSprite* gift = (GiftSprite*) event.target;
-    gift.alpha = 0.0;
-    [self removeChild:gift];
-    SPTween* tween = [SPTween tweenWithTarget:life time:0.2f];
-    int newValue = life.value + 10;
-    if (newValue > 100) { newValue = 100; }
-    [tween animateProperty:@"value" targetValue:newValue];
-    [mJuggler addObject:tween];
+- (void)interruptSucking {
+    for (MosquitoSprite*m in mosquitoes) {
+        if (m.visible) {
+            [m interruptSucking];
+        }
+    }
 }
 
 -(void)stopGame {

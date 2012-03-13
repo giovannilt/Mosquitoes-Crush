@@ -1,27 +1,28 @@
 <TextureAtlas imagePath='atlas.png'>
   <SubTexture name='gamebg' x='0' y='0' height='480.0' width='320.0'/>
   <SubTexture name='main' x='0' y='481' height='480.0' width='320.0'/>
-  <SubTexture name='start' x='321' y='0' height='142.0' width='300.0'/>
-  <SubTexture name='help' x='622' y='0' height='142.0' width='300.0'/>
-  <SubTexture name='credits' x='321' y='143' height='104.0' width='223.0'/>
-  <SubTexture name='bledout' x='321' y='248' height='109.0' width='200.0'/>
-  <SubTexture name='splash1' x='923' y='0' height='84.0' width='100.0'/>
-  <SubTexture name='fly3' x='545' y='143' height='84.0' width='100.0'/>
-  <SubTexture name='suck6' x='646' y='143' height='84.0' width='100.0'/>
-  <SubTexture name='fly2' x='747' y='143' height='84.0' width='100.0'/>
-  <SubTexture name='fly1' x='848' y='143' height='84.0' width='100.0'/>
-  <SubTexture name='suck5' x='522' y='248' height='84.0' width='100.0'/>
-  <SubTexture name='fly4' x='623' y='248' height='84.0' width='100.0'/>
-  <SubTexture name='splash2' x='724' y='248' height='84.0' width='100.0'/>
-  <SubTexture name='splash3' x='825' y='248' height='84.0' width='100.0'/>
-  <SubTexture name='splash4' x='321' y='358' height='84.0' width='100.0'/>
-  <SubTexture name='suck3' x='321' y='443' height='84.0' width='100.0'/>
-  <SubTexture name='suck4' x='321' y='528' height='84.0' width='100.0'/>
-  <SubTexture name='defpos' x='321' y='613' height='84.0' width='100.0'/>
-  <SubTexture name='suck1' x='321' y='698' height='84.0' width='100.0'/>
-  <SubTexture name='suck2' x='321' y='783' height='84.0' width='100.0'/>
-  <SubTexture name='splash5' x='321' y='868' height='84.0' width='100.0'/>
-  <SubTexture name='shakeit' x='0' y='962' height='50.0' width='50.0'/>
+  <SubTexture name='spraygamebg' x='321' y='0' height='480.0' width='320.0'/>
+  <SubTexture name='start' x='642' y='0' height='142.0' width='300.0'/>
+  <SubTexture name='help' x='642' y='143' height='142.0' width='300.0'/>
+  <SubTexture name='credits' x='642' y='286' height='104.0' width='223.0'/>
+  <SubTexture name='bledout' x='321' y='481' height='109.0' width='200.0'/>
+  <SubTexture name='splash2' x='642' y='391' height='84.0' width='100.0'/>
+  <SubTexture name='suck6' x='743' y='391' height='84.0' width='100.0'/>
+  <SubTexture name='fly3' x='866' y='286' height='84.0' width='100.0'/>
+  <SubTexture name='fly2' x='866' y='371' height='84.0' width='100.0'/>
+  <SubTexture name='suck4' x='321' y='591' height='84.0' width='100.0'/>
+  <SubTexture name='splash1' x='321' y='676' height='84.0' width='100.0'/>
+  <SubTexture name='fly4' x='321' y='761' height='84.0' width='100.0'/>
+  <SubTexture name='splash3' x='321' y='846' height='84.0' width='100.0'/>
+  <SubTexture name='splash4' x='321' y='931' height='84.0' width='100.0'/>
+  <SubTexture name='suck3' x='522' y='481' height='84.0' width='100.0'/>
+  <SubTexture name='suck5' x='623' y='481' height='84.0' width='100.0'/>
+  <SubTexture name='fly1' x='724' y='481' height='84.0' width='100.0'/>
+  <SubTexture name='defpos' x='825' y='481' height='84.0' width='100.0'/>
+  <SubTexture name='suck1' x='522' y='566' height='84.0' width='100.0'/>
+  <SubTexture name='suck2' x='522' y='651' height='84.0' width='100.0'/>
+  <SubTexture name='splash5' x='522' y='736' height='84.0' width='100.0'/>
+  <SubTexture name='shakeit' x='0' y='962' height='57.0' width='50.0'/>
   <SubTexture name='heart' x='51' y='962' height='48.0' width='50.0'/>
   <SubTexture name='spray' x='102' y='962' height='45.0' width='50.0'/>
 </TextureAtlas>

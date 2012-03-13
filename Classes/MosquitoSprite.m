@@ -139,6 +139,11 @@
     [mFlyJuggler addObject:flyTween];
 }
 
+-(void)interruptSucking {
+    flying = YES;
+    [self animOver:nil];
+}
+
 -(void)animOver:(SPEvent *)event {
     if (!flying) {
         SuckedEvent* event = [[SuckedEvent alloc] initWithType:EVENT_TYPE_MOSQUITO_SUCKED andDamage:power];

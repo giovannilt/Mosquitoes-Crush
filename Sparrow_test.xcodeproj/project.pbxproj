@@ -21,6 +21,9 @@
 		DE4A3DE510FFB2AF00FDA492 /* Game.m in Sources */ = {isa = PBXBuildFile; fileRef = DE4A3DE410FFB2AF00FDA492 /* Game.m */; };
 		DE5C4E6E138ED109004892CA /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = DE5C4E6D138ED109004892CA /* libz.dylib */; };
 		F9207780150A6C5C006B81CD /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = F9A1A37115012E3A00F99E73 /* Default.png */; };
+		F98187CC150FEFC400D1B986 /* atlas.png in Resources */ = {isa = PBXBuildFile; fileRef = F98187CA150FEFC400D1B986 /* atlas.png */; };
+		F98187CD150FEFC400D1B986 /* atlas.xml in Resources */ = {isa = PBXBuildFile; fileRef = F98187CB150FEFC400D1B986 /* atlas.xml */; };
+		F98187D0150FF06A00D1B986 /* SprayGift.m in Sources */ = {isa = PBXBuildFile; fileRef = F98187CF150FF06A00D1B986 /* SprayGift.m */; };
 		F9A1A3AE1504F5FE00F99E73 /* MosquitoSprite.m in Sources */ = {isa = PBXBuildFile; fileRef = F9A1A3AD1504F5FE00F99E73 /* MosquitoSprite.m */; };
 		F9A1A3B11504F9A600F99E73 /* Playground.m in Sources */ = {isa = PBXBuildFile; fileRef = F9A1A3B01504F9A600F99E73 /* Playground.m */; };
 		F9A1A3B41505005300F99E73 /* MosquitoTouchEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = F9A1A3B31505005300F99E73 /* MosquitoTouchEvent.m */; };
@@ -28,9 +31,8 @@
 		F9A65F93150D37F200F265E7 /* MainMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = F9A65F92150D37F200F265E7 /* MainMenu.m */; };
 		F9D660141507A72B001B9D9B /* SuckedEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = F9D660131507A72B001B9D9B /* SuckedEvent.m */; };
 		F9D660211507BA3D001B9D9B /* GameOver.m in Sources */ = {isa = PBXBuildFile; fileRef = F9D660201507BA3D001B9D9B /* GameOver.m */; };
-		F9DD6429150F34B3005B6AC7 /* atlas.png in Resources */ = {isa = PBXBuildFile; fileRef = F9DD6427150F34B3005B6AC7 /* atlas.png */; };
-		F9DD642A150F34B3005B6AC7 /* atlas.xml in Resources */ = {isa = PBXBuildFile; fileRef = F9DD6428150F34B3005B6AC7 /* atlas.xml */; };
 		F9DD642D150F3EED005B6AC7 /* GiftSprite.m in Sources */ = {isa = PBXBuildFile; fileRef = F9DD642C150F3EED005B6AC7 /* GiftSprite.m */; };
+		F9EA7069150F8D93004D868B /* HeartGift.m in Sources */ = {isa = PBXBuildFile; fileRef = F9EA7068150F8D92004D868B /* HeartGift.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -76,6 +78,10 @@
 		DE4A3DE310FFB2AF00FDA492 /* Game.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Game.h; sourceTree = "<group>"; };
 		DE4A3DE410FFB2AF00FDA492 /* Game.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Game.m; sourceTree = "<group>"; };
 		DE5C4E6D138ED109004892CA /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
+		F98187CA150FEFC400D1B986 /* atlas.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = atlas.png; sourceTree = "<group>"; };
+		F98187CB150FEFC400D1B986 /* atlas.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = atlas.xml; sourceTree = "<group>"; };
+		F98187CE150FF06A00D1B986 /* SprayGift.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SprayGift.h; sourceTree = "<group>"; };
+		F98187CF150FF06A00D1B986 /* SprayGift.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SprayGift.m; sourceTree = "<group>"; };
 		F9A1A37115012E3A00F99E73 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
 		F9A1A3AC1504F5FE00F99E73 /* MosquitoSprite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MosquitoSprite.h; sourceTree = "<group>"; };
 		F9A1A3AD1504F5FE00F99E73 /* MosquitoSprite.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MosquitoSprite.m; sourceTree = "<group>"; };
@@ -91,10 +97,10 @@
 		F9D660131507A72B001B9D9B /* SuckedEvent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SuckedEvent.m; sourceTree = "<group>"; };
 		F9D6601F1507BA3D001B9D9B /* GameOver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameOver.h; sourceTree = "<group>"; };
 		F9D660201507BA3D001B9D9B /* GameOver.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GameOver.m; sourceTree = "<group>"; };
-		F9DD6427150F34B3005B6AC7 /* atlas.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = atlas.png; sourceTree = "<group>"; };
-		F9DD6428150F34B3005B6AC7 /* atlas.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = atlas.xml; sourceTree = "<group>"; };
 		F9DD642B150F3EED005B6AC7 /* GiftSprite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GiftSprite.h; sourceTree = "<group>"; };
 		F9DD642C150F3EED005B6AC7 /* GiftSprite.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GiftSprite.m; sourceTree = "<group>"; };
+		F9EA7067150F8D92004D868B /* HeartGift.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HeartGift.h; sourceTree = "<group>"; };
+		F9EA7068150F8D92004D868B /* HeartGift.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HeartGift.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -141,6 +147,10 @@
 				F9A65F92150D37F200F265E7 /* MainMenu.m */,
 				F9DD642B150F3EED005B6AC7 /* GiftSprite.h */,
 				F9DD642C150F3EED005B6AC7 /* GiftSprite.m */,
+				F9EA7067150F8D92004D868B /* HeartGift.h */,
+				F9EA7068150F8D92004D868B /* HeartGift.m */,
+				F98187CE150FF06A00D1B986 /* SprayGift.h */,
+				F98187CF150FF06A00D1B986 /* SprayGift.m */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -212,8 +222,8 @@
 		F9A1A37015012DAE00F99E73 /* Images */ = {
 			isa = PBXGroup;
 			children = (
-				F9DD6427150F34B3005B6AC7 /* atlas.png */,
-				F9DD6428150F34B3005B6AC7 /* atlas.xml */,
+				F98187CA150FEFC400D1B986 /* atlas.png */,
+				F98187CB150FEFC400D1B986 /* atlas.xml */,
 				F9A1A37115012E3A00F99E73 /* Default.png */,
 			);
 			name = Images;
@@ -296,8 +306,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				F9207780150A6C5C006B81CD /* Default.png in Resources */,
-				F9DD6429150F34B3005B6AC7 /* atlas.png in Resources */,
-				F9DD642A150F34B3005B6AC7 /* atlas.xml in Resources */,
+				F98187CC150FEFC400D1B986 /* atlas.png in Resources */,
+				F98187CD150FEFC400D1B986 /* atlas.xml in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -319,6 +329,8 @@
 				F9D660211507BA3D001B9D9B /* GameOver.m in Sources */,
 				F9A65F93150D37F200F265E7 /* MainMenu.m in Sources */,
 				F9DD642D150F3EED005B6AC7 /* GiftSprite.m in Sources */,
+				F9EA7069150F8D93004D868B /* HeartGift.m in Sources */,
+				F98187D0150FF06A00D1B986 /* SprayGift.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

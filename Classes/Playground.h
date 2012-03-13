@@ -24,6 +24,7 @@
     int countHit;
     int countMiss;
     SPImage* bckImg;
+    SPImage* spraybckImg;
     GameOver* gMsg;
     int combo;
     SPTextField* comboTF;
@@ -34,6 +35,7 @@
 @property(nonatomic, retain) NSArray* colors;
 @property(nonatomic, retain) SPJuggler* juggler;
 @property(nonatomic, assign) BOOL canSuck;
+@property(nonatomic, retain) NumberField* life;
 
 - (id)initWithWidth:(float) width andHeight:(float) height;
 
@@ -44,4 +46,8 @@
 -(void) launchMosquitoAtX:(double) x andY:(double) y;
 
 -(void) stopGame;
+
+-(void) interruptSucking;
+
+-(void) swapBG;
 @end
