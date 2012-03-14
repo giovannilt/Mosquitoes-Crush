@@ -9,8 +9,13 @@
 #import "MainMenu.h"
 #import "Game.h"
 #import "MosquitoSprite.h"
+#import "MosquitoTouchEvent.h"
 
-@interface MainMenu()
+@interface MainMenu() {
+    int kills;
+    int HScore;
+    SPTextField* HScoreTF;
+}
 -(void) onStart:(SPEvent*) event;
 -(float) animateMenuButton:(SPButton*) button targetY:(float) tY delay:(float) delay;
 -(void) onHelp:(SPEvent*) event;
@@ -20,6 +25,11 @@
 -(void) createButtons;
 -(void) resetButtons;
 -(void) animateAllButtons;
+-(void) marathon;
+-(void) startMarathon;
+-(void) countDownValue:(int) val;
+-(void) killit:(MosquitoTouchEvent*) event;
+-(void) updateHighScore:(double) score;
 @end
 
 @implementation MainMenu
@@ -30,11 +40,26 @@
     if (self) {
         mJuggler = [[SPJuggler alloc] init];
         mGameoverJuggler = [[SPJuggler alloc] init];
+        mInGameJuggler = [[SPJuggler alloc] init];
         
         SPImage* bck = [SPImage imageWithTexture:[Game texture:@"main"]];
         [self addChild:bck];
         self.width = mW;
         self.height = mH;
+        
+        HScoreTF = [SPTextField textFieldWithText:@"ZZ Score: "];
+        if (HScore == 0) {
+            HScoreTF.visible = NO;
+        }
+        HScoreTF.x = 150;
+        HScoreTF.y = 130;
+        HScoreTF.fontName = @"MarkerFelt-Thin";
+        HScoreTF.color = SP_BLACK;
+        HScoreTF.hAlign = SPHAlignLeft;
+        HScoreTF.vAlign = SPVAlignTop;
+        HScoreTF.fontSize = 18;
+        HScoreTF.kerning = YES;
+        [self addChild:HScoreTF];
     
         [self createButtons];
         [self resetButtons];
@@ -142,9 +167,68 @@
     [self addChild:mPlayground];
     [mPlayground addEventListener:@selector(gameover:) atObject:self forType:EVENT_GAMEOVER];
     //[mPlayground release];
-    
-    for (int i =0; i < 10; i++) {
-        [mPlayground launchMosquitoAtX:arc4random()%(int)(self.width-60) andY:arc4random()%(int)(self.height-70)+22];
+    [self marathon];
+}
+
+-(void)marathon {
+    [self countDownValue:3];
+}
+
+-(void) countDownValue:(int)val {
+    SPTextField* counter = [SPTextField textFieldWithText:@"3"];
+    counter.fontName=@"AmericanTypewriter-Bold";
+    counter.fontSize = 60;
+  //  counter.border = YES;
+    counter.hAlign = SPHAlignCenter;
+    counter.vAlign = SPVAlignCenter;
+    counter.color = SP_BLACK;
+    [self addChild:counter];
+    counter.x = (self.width - counter.width)/2.0;
+    counter.y = 20;     
+    if (val > 0) {
+        counter.text = [NSString stringWithFormat:@"%d", val];
+    } else {
+        counter.text = @"GO!";
+    }
+    SPTween* tween = [SPTween tweenWithTarget:counter time:1.5 transition:SP_TRANSITION_EASE_OUT];
+    [tween scaleTo:2.0];
+    [tween moveToX:counter.x - counter.width*0.5 y:counter.y - counter.height*0.5];
+    [tween animateProperty:@"alpha" targetValue:0.0];
+    [mInGameJuggler addObject:tween];
+    [[mInGameJuggler delayInvocationAtTarget:counter byTime:1.5] removeFromParent];
+    if (val > 0) {
+        [[mInGameJuggler delayInvocationAtTarget:self byTime:1.0] countDownValue:val-1];
+    } else {
+        [[mInGameJuggler delayInvocationAtTarget:self byTime:1.0] startMarathon];
+    }
+}
+
+-(void)startMarathon {
+    for (int i =0; i < 7; i++) {
+        [mPlayground launchMosquitoAtX:arc4random()%(int)(self.width-60) Y:arc4random()%(int)(self.height-70)+22 FlyProb:0.75 Life:1 Power:3];
+    }
+    kills = 0;
+    [mPlayground addEventListener:@selector(killit:) atObject:self forType:EVENT_TYPE_MOSQUITO_TOUCHED];
+}
+
+-(void)killit:(MosquitoTouchEvent *)event {
+    kills += event.mosquito.worth;
+    if (kills >= 3) {
+        double prob = arc4random()%1000/1000.0;
+        if (prob <= 0.5) {
+            for (int i =0; i < 4; i++) {
+                [[mInGameJuggler delayInvocationAtTarget:mPlayground byTime:0.5*i] launchMosquitoAtX:arc4random()%(int)(self.width-60) Y:arc4random()%(int)(self.height-70)+22 FlyProb:0.75 Life:1 Power:3];
+            }
+        } else if (prob <= 0.85) {
+            for (int i =0; i < 3; i++) {
+                [[mInGameJuggler delayInvocationAtTarget:mPlayground byTime:0.7*i] launchMosquitoAtX:arc4random()%(int)(self.width-60) Y:arc4random()%(int)(self.height-70)+22 FlyProb:0.65 Life:2 Power:2];
+            }
+        } else {
+            for (int i =0; i < 2; i++) {
+                [[mInGameJuggler delayInvocationAtTarget:mPlayground byTime:1*i] launchMosquitoAtX:arc4random()%(int)(self.width-60) Y:arc4random()%(int)(self.height-70)+22 FlyProb:0.60 Life:3 Power:3];
+            }
+        }
+        kills = 0;
     }
 }
 
@@ -152,11 +236,21 @@
     [self resetButtons];
     float time = 0.2;
     SPTween* tween = [SPTween tweenWithTarget:mPlayground time:time transition:SP_TRANSITION_EASE_IN_OUT];
+    double TOTAL = mPlayground.TOTAL;
     mPlayground = nil;
     [tween animateProperty:@"alpha" targetValue:0];
     [mGameoverJuggler addObject:tween];
     [self animateAllButtons];
     [[mGameoverJuggler delayInvocationAtTarget:self byTime:time] killPlayground];
+    [[mGameoverJuggler delayInvocationAtTarget:self byTime:time] updateHighScore:TOTAL];
+}
+
+-(void)updateHighScore:(double)score {
+    if ((int)score > HScore) {
+        HScore = score;
+        HScoreTF.text = [NSString stringWithFormat:@"ZZ Score: %d", HScore];
+        HScoreTF.visible = YES;
+    }
 }
 
 -(void)killPlayground {
@@ -174,6 +268,7 @@
 -(void) advanceTime:(double) seconds {
     [mGameoverJuggler advanceTime:seconds];
     if (mPlayground) {
+        [mInGameJuggler advanceTime:seconds];
         [mPlayground advanceTime:seconds];
     } else {
         [mJuggler advanceTime:seconds];
@@ -190,6 +285,7 @@
 -(void)dealloc {
     [mJuggler release];
     [mGameoverJuggler release];
+    [mInGameJuggler release];
     [self dealloc];
 }
 @end

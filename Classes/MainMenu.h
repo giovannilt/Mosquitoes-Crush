@@ -11,6 +11,7 @@
 
 @interface MainMenu : SPSprite {
     SPJuggler* mJuggler;
+    SPJuggler* mInGameJuggler;
     Playground* mPlayground;
     SPSprite* mosquitoes;
     SPJuggler* mGameoverJuggler;

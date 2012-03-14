@@ -12,11 +12,14 @@
 #import "SuckedEvent.h"
 #import "Game.h"
 
-@interface MosquitoSprite()
+@interface MosquitoSprite() {
+    BOOL onColorTRansformation;
+}
 -(void) suck;
 -(void) animOver:(SPEvent*) event;
 -(void) splash;
 -(void) onSplashCompleted:(SPEvent*) event;
+-(void) setOnColorTransformation:(BOOL) val;
 @end
 
 @implementation MosquitoSprite
@@ -27,6 +30,7 @@
 {
     self = [super init];
     if (self) {
+        onColorTRansformation = NO;
         statsHeight = statsH;
         maxDisplacement = maxDisp;
         maxWidth = maxW;
@@ -140,8 +144,10 @@
 }
 
 -(void)interruptSucking {
-    flying = YES;
-    [self animOver:nil];
+    if (!flying) { 
+        flying = YES;
+        [self animOver:nil];
+    }
 }
 
 -(void)animOver:(SPEvent *)event {
@@ -164,8 +170,9 @@
 }
 
 -(void)onTouched:(SPTouchEvent *)event {
+    Playground* p = (Playground*)self.parent;
     SPTouch *touch = [[event touchesWithTarget:self andPhase:SPTouchPhaseEnded] anyObject];
-    if (touch && life > 0.0)
+    if (!onColorTRansformation && touch && life > 0.0)
     {
         SPEvent* event = [[SPEvent alloc] initWithType:EVENT_CORRECT_TOUCH bubbles:NO];
         [self dispatchEvent:event];
@@ -176,15 +183,25 @@
             [self splash];
         } else {
             life--;
-            Playground* p = (Playground*)self.parent;
+            onColorTRansformation = YES;
+            [self interruptSucking];
             SPTween* tween = [SPTween tweenWithTarget:flyClip time:0.4];
             [tween animateProperty:@"color" targetValue:((NSNumber*)[p.colors objectAtIndex:life - 1]).intValue];
             [mJuggler addObject:tween];
             tween = [SPTween tweenWithTarget:suckClip time:0.4];
             [tween animateProperty:@"color" targetValue:((NSNumber*)[p.colors objectAtIndex:life - 1]).intValue];
             [mJuggler addObject:tween];
+            [[mJuggler delayInvocationAtTarget:self byTime:0.4] setOnColorTransformation:NO];
         }
-    }    
+    } else if (onColorTRansformation && touch && life > 0.0) {
+        SPEvent* event = [[SPEvent alloc] initWithType:EVENT_INCORRECT_TOUCH bubbles:NO];
+        [p dispatchEvent:event];
+        [event release];
+    }
+}
+
+-(void)setOnColorTransformation:(BOOL)val {
+    onColorTRansformation = val;
 }
 
 -(void) advanceTime:(double) seconds {

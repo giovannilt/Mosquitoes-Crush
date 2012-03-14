@@ -11,6 +11,9 @@
 @interface GameOver : SPSprite {
     SPJuggler* mJuggler;
 }
-- (id)initWithWidth:(double) w height:(double) h points:(int) p hits:(int) hits misses:(int) miss;
+
+@property (nonatomic, assign) double TOTAL;
+
+- (id)initWithWidth:(double) w height:(double) h points:(int) p hits:(int) hits misses:(int) miss longestCombo:(int) lc;
 -(void) advanceTime:(double) seconds;
 @end

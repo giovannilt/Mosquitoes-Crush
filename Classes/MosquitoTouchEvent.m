@@ -14,7 +14,7 @@
 
 - (id)initWithType:(NSString *)type mosquito:(MosquitoSprite*) pmosquito point:(SPPoint *)point
 {
-    self = [super initWithType:type bubbles:NO];
+    self = [super initWithType:type bubbles:YES];
     if (self) {
         self.mosquito = pmosquito;
         self.mpoint = point;

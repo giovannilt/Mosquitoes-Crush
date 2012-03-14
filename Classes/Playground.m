@@ -16,7 +16,9 @@
 #import "HeartGift.h"
 #import "SprayGift.h"
 
-@interface Playground()
+@interface Playground() {
+    int longestCombo;
+}
 -(void) sucked:(SuckedEvent*) event;
 -(void) gameover:(SPTouchEvent*) event;
 -(void) onHit:(SPEvent*) event;
@@ -25,17 +27,19 @@
 -(void) showCombo;
 -(void) removeMosquito:(MosquitoSprite*) mosquito;
 -(void) placeGiftAtX:(double) x Y:(double) y Width:(double) w andHeight:(double) h;
+-(GiftSprite*) selectGiftWithWidth:(double)w Height:(double) h;
 @end
 
 @implementation Playground
 
-@synthesize statsHeight, colors, juggler = mJuggler, canSuck, life;
+@synthesize statsHeight, colors, juggler = mJuggler, canSuck, life, TOTAL;
 
 - (id)initWithWidth:(float) width andHeight:(float) height
 {
     self = [super init];
     if (self) {
         self.canSuck = YES;
+        longestCombo = 0;
         combo = 1;
         gMsg = nil;
         countHit = 0;
@@ -92,18 +96,16 @@
         beat.loop = SPLoopTypeReverse;
         [mJuggler addObject:beat];
         
-        comboTF = [SPTextField textFieldWithText:@"COMBO x3"];
+        comboTF = [SPTextField textFieldWithText:@"COMBO x1"];
         comboTF.fontName=@"AmericanTypewriter-Bold";
         comboTF.fontSize = 20;
-        comboTF.hAlign = SPHAlignRight;
-        comboTF.vAlign = SPVAlignCenter;
-        comboTF.color = 0xffc900;
-        comboTF.x = 160;
-        comboTF.y = 15;
+        comboTF.hAlign = SPHAlignLeft;
+        comboTF.vAlign = SPVAlignTop;
+        comboTF.color = 0x785F00;
+        comboTF.x = 1;
+        comboTF.y = 20;
         comboTF.alpha = 0;
         [self addChild:comboTF];
-        comboTF.scaleX = 0.7;
-        comboTF.scaleY = 0.7;
         
         statsHeight = 20;
         
@@ -122,8 +124,8 @@
     [mJuggler addObject:tween];
 }
 
--(void) launchMosquitoAtX:(double) x andY:(double) y {
-    MosquitoSprite* m = [[MosquitoSprite alloc] initWithWidth:60 andHeight:48 speed:0.5 xvariance:50 yvariance:40 flyprob:0.5 life:3 power:1 worth:3 maxW:self.width maxH:self.height maxDisp:100.0 statsH:statsHeight];
+-(void) launchMosquitoAtX:(double) x Y:(double) y FlyProb:(double) fp Life:(double) lif Power:(double) pow {
+    MosquitoSprite* m = [[MosquitoSprite alloc] initWithWidth:60 andHeight:48 speed:0.5 xvariance:50 yvariance:40 flyprob:fp life:lif power:pow worth:lif maxW:self.width maxH:self.height maxDisp:100.0 statsH:statsHeight];
     [m addEventListener:@selector(killit:) atObject:self forType:EVENT_TYPE_MOSQUITO_TOUCHED];
     [m addEventListener:@selector(sucked:) atObject:self forType:EVENT_TYPE_MOSQUITO_SUCKED];
     [m addEventListener:@selector(onHit:) atObject:self forType:EVENT_CORRECT_TOUCH];
@@ -139,13 +141,12 @@
 -(void) showCombo {
     comboTF.text = [NSString stringWithFormat:@"COMBO x%d", combo];
     SPTween* tween = [SPTween tweenWithTarget:comboTF time:0.7 transition:SP_TRANSITION_EASE_IN_OUT_ELASTIC];
-    [tween scaleTo:1];
+    [tween scaleTo:1.2];
     [tween animateProperty:@"alpha" targetValue:1];
     [mJuggler addObject:tween];
     tween = [SPTween tweenWithTarget:comboTF time:0.3 transition:SP_TRANSITION_EASE_IN_OUT];
     tween.delay = 0.7;
-    [tween scaleTo:0.7];
-    [tween animateProperty:@"alpha" targetValue:0];
+    [tween scaleTo:1];
     [mJuggler addObject:tween];
 }
 
@@ -153,6 +154,7 @@
     if (!stop) {
         countHit++;
         combo++;
+        if (longestCombo < combo) { longestCombo = combo; }
         [self showCombo];
     }
 }
@@ -161,6 +163,7 @@
     if (!stop) {
         countMiss++;
         combo = 1;
+        comboTF.alpha = 0;
     }
 }
 
@@ -193,20 +196,24 @@
     [self placeGiftAtX:x Y:y Width:w andHeight:h];
 }
 
+-(GiftSprite*)selectGiftWithWidth:(double)w Height:(double)h {
+    double probKind = arc4random()%1000/1000.0;
+    if (probKind <= 0.8) {
+        return [[HeartGift alloc] initWithWidth:w Height:h];
+    } else {
+        return [[SprayGift alloc] initWithWidth:w Height:h];
+    }
+}
+
 -(void)placeGiftAtX:(double)x Y:(double)y Width:(double)w andHeight:(double)h{
     double probGift = arc4random()%1000/1000.0;
-    if (probGift < 1) {
-        w = w/2.0;
-        h = h/2.0;
-        x = x + w/2.0;
-        y = y + h/2.0;
-        SprayGift* gift = nil;
-        double probKind = arc4random()%1000/1000.0;
-        if (probKind <= 0.7) {
-            gift = [[HeartGift alloc] initWithWidth:w Height:h];
-        } else {
-            gift = [[SprayGift alloc] initWithWidth:w Height:h];
-        }
+    if (probGift < 0.3) {
+        double oW = w, oH = h;
+        w = w*0.8;
+        h = h*0.8;
+        x = x + (oW - w)/2.0;
+        y = y + (oH - h)/2.0;
+        GiftSprite* gift = [self selectGiftWithWidth:w Height:h];
         gift.x = x;
         gift.y = y;
         [self addChild:gift];
@@ -228,7 +235,7 @@
     @synchronized(self) {
         if (!stop) {
             stop = YES;
-            gMsg = [[GameOver alloc] initWithWidth:300 height:162 points:points.value hits:countHit misses:countMiss];
+            gMsg = [[GameOver alloc] initWithWidth:300 height:162 points:points.value hits:countHit misses:countMiss longestCombo:longestCombo];
             float x = self.width/2.0 - 150;
             float y = self.height/2.0 -50 - 81;
             gMsg.x = self.width/2.0;
@@ -251,6 +258,7 @@
 -(void)gameover:(SPTouchEvent *)event {
     SPTouch *touch = [[event touchesWithTarget:self andPhase:SPTouchPhaseEnded] anyObject];
     if(touch) {
+        self.TOTAL = gMsg.TOTAL;
         SPEvent* event = [[SPEvent alloc] initWithType:EVENT_GAMEOVER bubbles:NO];
         [self dispatchEvent:event];
         [event release];

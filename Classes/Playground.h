@@ -31,6 +31,7 @@
     NSMutableArray* gifts;
 }
 
+@property(nonatomic, assign) double TOTAL;
 @property(nonatomic, assign) double statsHeight;
 @property(nonatomic, retain) NSArray* colors;
 @property(nonatomic, retain) SPJuggler* juggler;
@@ -43,7 +44,7 @@
 
 -(void) killit:(SPTouchEvent*) event;
 
--(void) launchMosquitoAtX:(double) x andY:(double) y;
+-(void) launchMosquitoAtX:(double) x Y:(double) y FlyProb:(double) fp Life:(double) lif Power:(double) pow;
 
 -(void) stopGame;
 
