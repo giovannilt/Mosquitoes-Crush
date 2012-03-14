@@ -18,5 +18,9 @@
 
 +(void) releaseATLAS;
 
++(NSString*) fontATWR;
++(NSString*) fontATWB;
++(NSString*) fontMF;
+
 - (void) onEnterFrame:(SPEnterFrameEvent*) event;
 @end

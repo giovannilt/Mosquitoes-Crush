@@ -53,8 +53,8 @@
         }
         HScoreTF.x = 150;
         HScoreTF.y = 130;
-        HScoreTF.fontName = @"MarkerFelt-Thin";
-        HScoreTF.color = SP_BLACK;
+        HScoreTF.fontName = [Game fontMF];
+        HScoreTF.color = SP_WHITE;
         HScoreTF.hAlign = SPHAlignLeft;
         HScoreTF.vAlign = SPVAlignTop;
         HScoreTF.fontSize = 18;
@@ -181,6 +181,7 @@
   //  counter.border = YES;
     counter.hAlign = SPHAlignCenter;
     counter.vAlign = SPVAlignCenter;
+    counter.kerning = YES;
     counter.color = SP_BLACK;
     [self addChild:counter];
     counter.x = (self.width - counter.width)/2.0;

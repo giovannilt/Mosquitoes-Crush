@@ -21,6 +21,12 @@
 		DE4A3DE510FFB2AF00FDA492 /* Game.m in Sources */ = {isa = PBXBuildFile; fileRef = DE4A3DE410FFB2AF00FDA492 /* Game.m */; };
 		DE5C4E6E138ED109004892CA /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = DE5C4E6D138ED109004892CA /* libz.dylib */; };
 		F9207780150A6C5C006B81CD /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = F9A1A37115012E3A00F99E73 /* Default.png */; };
+		F96CBAF51511368C00B75619 /* mf.fnt in Resources */ = {isa = PBXBuildFile; fileRef = F96CBAF31511368C00B75619 /* mf.fnt */; };
+		F96CBAF61511368C00B75619 /* mf.png in Resources */ = {isa = PBXBuildFile; fileRef = F96CBAF41511368C00B75619 /* mf.png */; };
+		F96CBAF91511375000B75619 /* atwbold.fnt in Resources */ = {isa = PBXBuildFile; fileRef = F96CBAF71511375000B75619 /* atwbold.fnt */; };
+		F96CBAFA1511375000B75619 /* atwbold.png in Resources */ = {isa = PBXBuildFile; fileRef = F96CBAF81511375000B75619 /* atwbold.png */; };
+		F96CBAFD151137C600B75619 /* atwregular.fnt in Resources */ = {isa = PBXBuildFile; fileRef = F96CBAFB151137C600B75619 /* atwregular.fnt */; };
+		F96CBAFE151137C600B75619 /* atwregular.png in Resources */ = {isa = PBXBuildFile; fileRef = F96CBAFC151137C600B75619 /* atwregular.png */; };
 		F98187CC150FEFC400D1B986 /* atlas.png in Resources */ = {isa = PBXBuildFile; fileRef = F98187CA150FEFC400D1B986 /* atlas.png */; };
 		F98187CD150FEFC400D1B986 /* atlas.xml in Resources */ = {isa = PBXBuildFile; fileRef = F98187CB150FEFC400D1B986 /* atlas.xml */; };
 		F98187D0150FF06A00D1B986 /* SprayGift.m in Sources */ = {isa = PBXBuildFile; fileRef = F98187CF150FF06A00D1B986 /* SprayGift.m */; };
@@ -78,6 +84,12 @@
 		DE4A3DE310FFB2AF00FDA492 /* Game.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Game.h; sourceTree = "<group>"; };
 		DE4A3DE410FFB2AF00FDA492 /* Game.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Game.m; sourceTree = "<group>"; };
 		DE5C4E6D138ED109004892CA /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
+		F96CBAF31511368C00B75619 /* mf.fnt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = mf.fnt; sourceTree = "<group>"; };
+		F96CBAF41511368C00B75619 /* mf.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = mf.png; sourceTree = "<group>"; };
+		F96CBAF71511375000B75619 /* atwbold.fnt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = atwbold.fnt; sourceTree = "<group>"; };
+		F96CBAF81511375000B75619 /* atwbold.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = atwbold.png; sourceTree = "<group>"; };
+		F96CBAFB151137C600B75619 /* atwregular.fnt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = atwregular.fnt; sourceTree = "<group>"; };
+		F96CBAFC151137C600B75619 /* atwregular.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = atwregular.png; sourceTree = "<group>"; };
 		F98187CA150FEFC400D1B986 /* atlas.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = atlas.png; sourceTree = "<group>"; };
 		F98187CB150FEFC400D1B986 /* atlas.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = atlas.xml; sourceTree = "<group>"; };
 		F98187CE150FF06A00D1B986 /* SprayGift.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SprayGift.h; sourceTree = "<group>"; };
@@ -222,6 +234,12 @@
 		F9A1A37015012DAE00F99E73 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				F96CBAFB151137C600B75619 /* atwregular.fnt */,
+				F96CBAFC151137C600B75619 /* atwregular.png */,
+				F96CBAF71511375000B75619 /* atwbold.fnt */,
+				F96CBAF81511375000B75619 /* atwbold.png */,
+				F96CBAF31511368C00B75619 /* mf.fnt */,
+				F96CBAF41511368C00B75619 /* mf.png */,
 				F98187CA150FEFC400D1B986 /* atlas.png */,
 				F98187CB150FEFC400D1B986 /* atlas.xml */,
 				F9A1A37115012E3A00F99E73 /* Default.png */,
@@ -308,6 +326,12 @@
 				F9207780150A6C5C006B81CD /* Default.png in Resources */,
 				F98187CC150FEFC400D1B986 /* atlas.png in Resources */,
 				F98187CD150FEFC400D1B986 /* atlas.xml in Resources */,
+				F96CBAF51511368C00B75619 /* mf.fnt in Resources */,
+				F96CBAF61511368C00B75619 /* mf.png in Resources */,
+				F96CBAF91511375000B75619 /* atwbold.fnt in Resources */,
+				F96CBAFA1511375000B75619 /* atwbold.png in Resources */,
+				F96CBAFD151137C600B75619 /* atwregular.fnt in Resources */,
+				F96CBAFE151137C600B75619 /* atwregular.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

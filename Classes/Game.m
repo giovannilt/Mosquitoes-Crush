@@ -6,6 +6,9 @@
 #import "Game.h" 
 
 static SPTextureAtlas* ATLAS = nil;
+static NSString* ATW_REGULAR = nil;
+static NSString* ATW_BOLD = nil;
+static NSString* MF_THIN = nil;
 
 @implementation Game
 
@@ -13,6 +16,10 @@ static SPTextureAtlas* ATLAS = nil;
 {
     if ((self = [super initWithWidth:width height:height]))
     {
+        ATW_BOLD = [SPTextField registerBitmapFontFromFile:@"atwbold.fnt"];
+        ATW_REGULAR = [SPTextField registerBitmapFontFromFile:@"atwregular.fnt"];
+        MF_THIN = [SPTextField registerBitmapFontFromFile:@"mf.fnt"];
+        
         mMainMenu = [[MainMenu alloc] initWithWidth:width andHeight:height];
         [self addChild:mMainMenu];
         [mMainMenu release];
@@ -32,6 +39,18 @@ static SPTextureAtlas* ATLAS = nil;
 
 +(void)initATLAS {
     ATLAS = [[SPTextureAtlas atlasWithContentsOfFile:@"atlas.xml"] retain];
+}
+
++(NSString *)fontMF {
+    return MF_THIN;
+}
+
++(NSString *)fontATWR {
+    return ATW_REGULAR;
+}
+
++(NSString *)fontATWB {
+    return ATW_BOLD;
 }
 
 +(void)releaseATLAS {

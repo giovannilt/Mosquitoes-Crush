@@ -31,25 +31,25 @@
         [self addChild:img];
     
         SPTextField* points = [SPTextField textFieldWithText:@"score:"];
-        points.x = 80;
+        points.x = 90;
         points.y = 10;
-        points.fontName = @"MarkerFelt-Thin";
+        points.fontName = [Game fontATWR];
         points.color = 0xff0000;
         points.hAlign = SPHAlignRight;
         points.vAlign = SPVAlignCenter;
-        points.fontSize = 15;
+        points.fontSize = 13;
         points.kerning = YES;
         [self addChild:points];    
         
         NumberField* pointsN = [[NumberField alloc] initWithText:@""];
         pointsN.value = 0;
-        pointsN.x = 210;
+        pointsN.x = 220;
         pointsN.y = 10;
-        pointsN.fontName = @"MarkerFelt-Thin";
+        pointsN.fontName = [Game fontATWR];
         pointsN.color = 0xff0000;
         pointsN.hAlign = SPHAlignLeft;
         pointsN.vAlign = SPVAlignCenter;
-        pointsN.fontSize = 15;
+        pointsN.fontSize = 13;
         pointsN.kerning = YES;
         [self addChild:pointsN];
         SPTween* tween = [SPTween tweenWithTarget:pointsN time:0.8];
@@ -58,13 +58,13 @@
         [pointsN release];
         
         SPTextField* acc = [SPTextField textFieldWithText:@"accuracy:"];
-        acc.x = 80;
+        acc.x = 90;
         acc.y = 24;
-        acc.fontName = @"MarkerFelt-Thin";
+        acc.fontName = [Game fontATWR];
         acc.color = 0xff0000;
         acc.hAlign = SPHAlignRight;
         acc.vAlign = SPVAlignCenter;
-        acc.fontSize = 15;
+        acc.fontSize = 13;
         acc.kerning = YES;
         [self addChild:acc];    
     
@@ -75,13 +75,13 @@
         if (hits + miss > 0) {
             val = (hits*1.0 / (hits + miss)) * 100; 
         }
-        accN.x = 210;
+        accN.x = 220;
         accN.y = 24;
-        accN.fontName = @"MarkerFelt-Thin";
+        accN.fontName = [Game fontATWR];
         accN.color = 0xff0000;
         accN.hAlign = SPHAlignLeft;
         accN.vAlign = SPVAlignCenter;
-        accN.fontSize = 15;
+        accN.fontSize = 13;
         accN.kerning = YES;
         [self addChild:accN];
         tween = [SPTween tweenWithTarget:accN time:0.8];
@@ -91,25 +91,25 @@
         [accN release];
 
         SPTextField* lgc = [SPTextField textFieldWithText:@"longest combo:"];
-        lgc.x = 80;
+        lgc.x = 90;
         lgc.y = 38;
-        lgc.fontName = @"MarkerFelt-Thin";
+        lgc.fontName = [Game fontATWR];
         lgc.color = 0xff0000;
         lgc.hAlign = SPHAlignRight;
         lgc.vAlign = SPVAlignCenter;
-        lgc.fontSize = 15;
+        lgc.fontSize = 13;
         lgc.kerning = YES;
         [self addChild:lgc];    
         
         NumberField* lgcN = [[NumberField alloc] initWithText:@""];
         lgcN.value = 0;
-        lgcN.x = 210;
+        lgcN.x = 220;
         lgcN.y = 38;
-        lgcN.fontName = @"MarkerFelt-Thin";
+        lgcN.fontName = [Game fontATWR];
         lgcN.color = 0xff0000;
         lgcN.hAlign = SPHAlignLeft;
         lgcN.vAlign = SPVAlignCenter;
-        lgcN.fontSize = 15;
+        lgcN.fontSize = 13;
         lgcN.kerning = YES;
         [self addChild:lgcN];
         tween = [SPTween tweenWithTarget:lgcN time:0.8];
@@ -119,25 +119,25 @@
         [lgcN release];
         
         SPTextField* total = [SPTextField textFieldWithText:@"TOTAL:"];
-        total.x = 80;
+        total.x = 90;
         total.y = 60;
-        total.fontName = @"MarkerFelt-Thin";
+        total.fontName = [Game fontATWB];
         total.color = 0xff0000;
         total.hAlign = SPHAlignRight;
         total.vAlign = SPVAlignCenter;
-        total.fontSize = 17;
+        total.fontSize = 15;
         total.kerning = YES;
         [self addChild:total];    
         
         NumberField* totalN = [[NumberField alloc] initWithText:@""];
         totalN.value = 0;
-        totalN.x = 210;
+        totalN.x = 220;
         totalN.y = 60;
-        totalN.fontName = @"MarkerFelt-Thin";
+        totalN.fontName = [Game fontATWB];
         totalN.color = 0xff0000;
         totalN.hAlign = SPHAlignLeft;
         totalN.vAlign = SPVAlignCenter;
-        totalN.fontSize = 17;
+        totalN.fontSize = 22;
         totalN.kerning = YES;
         [self addChild:totalN];
         tween = [SPTween tweenWithTarget:totalN time:0.8];

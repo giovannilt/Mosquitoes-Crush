@@ -28,6 +28,7 @@
 -(void) removeMosquito:(MosquitoSprite*) mosquito;
 -(void) placeGiftAtX:(double) x Y:(double) y Width:(double) w andHeight:(double) h;
 -(GiftSprite*) selectGiftWithWidth:(double)w Height:(double) h;
+-(void) setComboText:(NSString*) text;
 @end
 
 @implementation Playground
@@ -60,25 +61,25 @@
         
         points = [[NumberField alloc] initWithText:@"Kills: "];
         points.value = 0;
-        points.fontName = @"MarkerFelt-Thin";
-        points.color = SP_BLACK;
+        points.fontName = [Game fontMF];
+        points.color = 0x33cc66;
         points.hAlign = SPHAlignLeft;
         points.vAlign = SPVAlignTop;
         points.fontSize = 20;
         points.x = 5;
-        points.y = 0;
+        points.y = 1.5;
         points.kerning = YES;
         [self addChild:points];
 
         life = [[NumberField alloc] initWithText:@""];
         life.value = 100;
-        life.fontName = @"MarkerFelt-Thin";
+        life.fontName = [Game fontMF];
         life.fontSize = 20;
         life.hAlign = SPHAlignRight;
         life.vAlign = SPVAlignTop;
-        life.color = SP_BLACK;
+        life.color = 0xff9999;
         life.x = 160;
-        life.y = 0;
+        life.y = 1.5;
         life.kerning = YES;
         [self addChild:life];
         
@@ -97,14 +98,15 @@
         [mJuggler addObject:beat];
         
         comboTF = [SPTextField textFieldWithText:@"COMBO x1"];
-        comboTF.fontName=@"AmericanTypewriter-Bold";
-        comboTF.fontSize = 20;
+        comboTF.fontName = [Game fontATWB];
+        comboTF.fontSize = 22;
         comboTF.hAlign = SPHAlignLeft;
         comboTF.vAlign = SPVAlignTop;
-        comboTF.color = 0x785F00;
+        comboTF.color = 0xff9900;
         comboTF.x = 1;
         comboTF.y = 20;
         comboTF.alpha = 0;
+        comboTF.kerning = YES;
         [self addChild:comboTF];
         
         statsHeight = 20;
@@ -139,15 +141,20 @@
 }
 
 -(void) showCombo {
-    comboTF.text = [NSString stringWithFormat:@"COMBO x%d", combo];
     SPTween* tween = [SPTween tweenWithTarget:comboTF time:0.7 transition:SP_TRANSITION_EASE_IN_OUT_ELASTIC];
     [tween scaleTo:1.2];
     [tween animateProperty:@"alpha" targetValue:1];
     [mJuggler addObject:tween];
+    [[mJuggler delayInvocationAtTarget:self byTime:0.3] setComboText:[NSString stringWithFormat:@"COMBO x%d", combo]];
     tween = [SPTween tweenWithTarget:comboTF time:0.3 transition:SP_TRANSITION_EASE_IN_OUT];
     tween.delay = 0.7;
     [tween scaleTo:1];
+    [tween animateProperty:@"alpha" targetValue:0.5];
     [mJuggler addObject:tween];
+}
+
+-(void)setComboText:(NSString *)text {
+    comboTF.text = text;
 }
 
 -(void) onHit:(SPEvent *)event {
