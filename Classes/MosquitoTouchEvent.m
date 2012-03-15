@@ -10,7 +10,7 @@
 
 @implementation MosquitoTouchEvent
 
-@synthesize mosquito, mpoint;
+@synthesize mosquito, mpoint, transformPacific;
 
 - (id)initWithType:(NSString *)type mosquito:(MosquitoSprite*) pmosquito point:(SPPoint *)point
 {
@@ -18,6 +18,7 @@
     if (self) {
         self.mosquito = pmosquito;
         self.mpoint = point;
+        self.transformPacific = YES;
     }
     
     return self;

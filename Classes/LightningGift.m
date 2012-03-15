@@ -1,24 +1,24 @@
 //
-//  SprayGift.m
+//  LightningGift.m
 //  Sparrow_test
 //
-//  Created by Iviso Malazzi on 3/13/12.
+//  Created by Iviso Malazzi on 3/15/12.
 //  Copyright 2012 __MyCompanyName__. All rights reserved.
 //
 
-#import "SprayGift.h"
+#import "LightningGift.h"
 #import "Playground.h"
 
-@interface SprayGift()
+@interface LightningGift()
 -(void) onActivated:(SPEvent*) event;
 -(void) onEffectEnded:(SPEvent*) event;
 @end
 
-@implementation SprayGift
+@implementation LightningGift
 
 - (id)initWithWidth:(double)w Height:(double)h
 {
-    self = [super initWithImgName:@"spray" Width:w Height:h];
+    self = [super initWithImgName:@"lightning" Width:w Height:h];
     if (self) {
         [self addEventListener:@selector(onActivated:) atObject:self forType:EVENT_GIFT_ACTIVATED];
     }
@@ -31,11 +31,8 @@
     [mJuggler removeAllObjects];
     self.alpha = 1.0;
     if (![self terminateGiftSameClass]) {
-        [pg swapBG];
-        pg.canSuck = NO;
-        [pg interruptSucking];
+        pg.mustBurn = YES;
     }
-    [pg removeAllPacific];
     SPTween* tween = [SPTween tweenWithTarget:self time:0.5 transition:SP_TRANSITION_EASE_IN_OUT];
     [tween moveToX:275 y:25];
     [mJuggler addObject:tween];
@@ -48,10 +45,10 @@
 
 -(void)onEffectEnded:(SPEvent *)event {
     Playground* pg = (Playground*)self.parent;
-    [pg swapBG];
-    pg.canSuck = YES;
+    pg.mustBurn = NO;
     self.alpha = 0.0;
     [self removeFromParent];    
 }
+
 
 @end

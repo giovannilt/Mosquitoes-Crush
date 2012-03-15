@@ -15,6 +15,8 @@
 #import "GiftSprite.h"
 #import "HeartGift.h"
 #import "SprayGift.h"
+#import "LightningGift.h"
+#import "PacificSprite.h"
 
 @interface Playground() {
     int longestCombo;
@@ -30,16 +32,20 @@
 -(void) placeGiftAtX:(double) x Y:(double) y Width:(double) w andHeight:(double) h;
 -(GiftSprite*) selectGiftWithWidth:(double)w Height:(double) h;
 -(void) setComboText:(NSString*) text;
+-(void) killPacific:(MosquitoTouchEvent*) event;
+-(void) hitPacific:(SPEvent*) event;
+-(void) removePacific:(PacificSprite*) pacific Transform:(BOOL) trans;
 @end
 
 @implementation Playground
 
-@synthesize statsHeight, colors, juggler = mJuggler, canSuck, life, TOTAL;
+@synthesize statsHeight, colors, juggler = mJuggler, canSuck, life, TOTAL, mustBurn, gifts;
 
 - (id)initWithWidth:(float) width andHeight:(float) height
 {
     self = [super init];
     if (self) {
+        mustBurn = NO;
         showResults = YES;
         self.canSuck = YES;
         longestCombo = 0;
@@ -130,7 +136,7 @@
 }
 
 -(void) launchMosquitoAtX:(double) x Y:(double) y FlyProb:(double) fp Life:(double) lif Power:(double) pow Worth:(double) worth {
-    MosquitoSprite* m = [[MosquitoSprite alloc] initWithWidth:60 andHeight:48 speed:150.0 xvariance:50 yvariance:40 flyprob:fp life:lif power:pow worth:lif maxW:self.width maxH:self.height maxDisp:100.0 statsH:statsHeight];
+    MosquitoSprite* m = [[MosquitoSprite alloc] initWithWidth:60 andHeight:48 speed:150.0 flyprob:fp life:lif power:pow worth:lif maxW:self.width maxH:self.height statsH:statsHeight];
     [m addEventListener:@selector(killit:) atObject:self forType:EVENT_TYPE_MOSQUITO_TOUCHED];
     [m addEventListener:@selector(sucked:) atObject:self forType:EVENT_TYPE_MOSQUITO_SUCKED];
     [m addEventListener:@selector(onHit:) atObject:self forType:EVENT_CORRECT_TOUCH];
@@ -139,8 +145,30 @@
     [m initColor];
     m.x = x;
     m.y = y;
-    //[m fly];
     [m release];
+}
+
+- (void)launchPacificAtX:(double)x Y:(double)y {
+    PacificSprite* m = [[PacificSprite alloc] initWithMaxWidth:self.width MaxHeight:self.height StatsHeight:statsHeight];
+    [m addEventListener:@selector(killPacific:) atObject:self forType:EVENT_TYPE_MOSQUITO_TOUCHED];
+    [m addEventListener:@selector(hitPacific:) atObject:self forType:EVENT_CORRECT_TOUCH];  
+    [mosquitoes addObject:m];
+    [self addChild:m];
+    [m initPacificColor];
+    m.x = x;
+    m.y = y;
+    [m release];
+}
+
+-(void)removeAllPacific {
+    for (MosquitoSprite* m in mosquitoes) {
+        if ([m isKindOfClass:[PacificSprite class]]) {
+            MosquitoTouchEvent* event = [[MosquitoTouchEvent alloc] initWithType:EVENT_TYPE_MOSQUITO_TOUCHED mosquito:m point:nil];
+            event.transformPacific = NO;
+            [self killPacific:event];
+            [event release];
+        }
+    }
 }
 
 -(void) showCombo {
@@ -158,6 +186,31 @@
 
 -(void)setComboText:(NSString *)text {
     comboTF.text = text;
+}
+
+-(void)hitPacific:(SPEvent *)event {
+    if (!stop) {
+        countMiss++;
+        combo = 1;
+        comboTF.alpha = 0;
+    }
+}
+
+-(void)killPacific:(MosquitoTouchEvent *)event {
+    SPTween* tween = [SPTween tweenWithTarget:event.mosquito time:1];
+    [tween animateProperty:@"alpha" targetValue:0];
+    [mJuggler addObject:tween];
+    [[mJuggler delayInvocationAtTarget:self byTime:1] removePacific:(PacificSprite*)event.mosquito Transform:event.transformPacific];    
+}
+
+-(void)removePacific:(PacificSprite *)pacific Transform:(BOOL)trans {
+    pacific.visible = NO;
+    double x = pacific.x;
+    double y = pacific.y;
+    [self removeChild:pacific];
+    if (trans) {
+        [self launchMosquitoAtX:x Y:y FlyProb:0.50 Life:3 Power:3 Worth:5.3];
+    }
 }
 
 -(void) onHit:(SPEvent *)event {
@@ -208,16 +261,22 @@
 
 -(GiftSprite*)selectGiftWithWidth:(double)w Height:(double)h {
     double probKind = arc4random()%1000/1000.0;
-    if (probKind <= 0.8) {
-        return [[HeartGift alloc] initWithWidth:w Height:h];
-    } else {
-        return [[SprayGift alloc] initWithWidth:w Height:h];
+    double s = 0;
+    NSString* arr[] = {@"HeartGift", @"LightningGift", @"SprayGift"};
+    double dist[] = {0.6, 0.3, 0.1};
+    int tot = 3;
+    for (int i =0; i < tot; i++) {
+        s += dist[i];
+        if (s >= probKind) {
+            return [[NSClassFromString(arr[i]) alloc] initWithWidth:w Height:h];
+        }
     }
+    return [[HeartGift alloc] initWithWidth:w Height:h];
 }
 
 -(void)placeGiftAtX:(double)x Y:(double)y Width:(double)w andHeight:(double)h{
     double probGift = arc4random()%1000/1000.0;
-    if (probGift < 0.3) {
+    if (probGift < 0.5) {
         double oW = w, oH = h;
         w = w*0.8;
         h = h*0.8;

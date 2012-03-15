@@ -18,6 +18,7 @@
 
 @property (nonatomic, retain) MosquitoSprite* mosquito;
 @property (nonatomic, retain) SPPoint* mpoint;
+@property (nonatomic, assign) BOOL transformPacific;
 
 - (id)initWithType:(NSString *)type mosquito:(MosquitoSprite*) mosquito point:(SPPoint*)point;
 

@@ -44,7 +44,6 @@
 -(void)onEffectEnded:(SPEvent *)event {
     self.alpha = 0.0;
     [self removeFromParent];
-    
 }
 
 @end

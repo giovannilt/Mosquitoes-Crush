@@ -25,4 +25,8 @@
 - (void) onAnimationCompleted:(SPEvent*) event;
 
 - (void) onTouch:(SPTouchEvent*) event;
+
+- (BOOL) terminateGiftSameClass;
+
+- (void) terminate;
 @end

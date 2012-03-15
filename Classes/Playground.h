@@ -9,6 +9,7 @@
 #import "SPSprite.h"
 #import "NumberField.h"
 #import "GameOver.h"
+#import "MosquitoTouchEvent.h"
 
 #define EVENT_GAMEOVER @"playgroundgamoeover"
 #define EVENT_INCORRECT_TOUCH @"incorrecttouch"
@@ -37,14 +38,20 @@
 @property(nonatomic, retain) SPJuggler* juggler;
 @property(nonatomic, assign) BOOL canSuck;
 @property(nonatomic, retain) NumberField* life;
+@property(nonatomic, assign) BOOL mustBurn;
+@property(nonatomic, readonly) NSMutableArray* gifts;
 
 - (id)initWithWidth:(float) width andHeight:(float) height;
 
 -(void) advanceTime:(double) seconds;
 
--(void) killit:(SPTouchEvent*) event;
+-(void) removeAllPacific;
+
+-(void) killit:(MosquitoTouchEvent*) event;
 
 -(void) launchMosquitoAtX:(double) x Y:(double) y FlyProb:(double) fp Life:(double) lif Power:(double) pow  Worth:(double) worth;
+
+-(void) launchPacificAtX:(double) x Y:(double) y;
 
 -(void) stopGame;
 

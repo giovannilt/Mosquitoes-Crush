@@ -21,10 +21,12 @@
     double wanderChange;
     double changeDistance;
     double currDistance;
+    BOOL lcanSuck;
 }
 -(void) suck;
 -(void) animOver:(SPEvent*) event;
 -(void) splash;
+-(void) burn;
 -(void) onSplashCompleted:(SPEvent*) event;
 -(void) setOnColorTransformation:(BOOL) val;
 -(void) moveWithSeconds:(double) seconds;
@@ -35,10 +37,11 @@
 
 @synthesize worth, mWidth, mHeight;
 
-- (id)initWithWidth:(double) width andHeight:(double) height speed:(float) pspeed xvariance:(int) xv yvariance:(int) yv flyprob:(double) fp life:(int)l power:(int)p worth:(int)w maxW:(float)maxW maxH:(float)maxH maxDisp:(float)maxDisp statsH:(float) statsH
+- (id)initWithWidth:(double) width andHeight:(double) height speed:(float) pspeed flyprob:(double) fp life:(int)l power:(int)p worth:(int)w maxW:(float)maxW maxH:(float)maxH statsH:(float) statsH
 {
     self = [super init];
     if (self) {
+        lcanSuck = YES;
         circleRadius = 30;
         changeDistance = 300 + (arc4random()%1000/1000.0)*300 - 150;
         currDistance = 0;
@@ -47,14 +50,11 @@
         velocity = [[Vector2D alloc] initWithX:(arc4random()%100/100.0)*pspeed - pspeed/2.0 andY:(arc4random()%100/100.0)*pspeed - pspeed/2.0];
         onColorTRansformation = NO;
         statsHeight = statsH;
-        maxDisplacement = maxDisp;
         maxWidth = maxW;
         maxHeight = maxH;
         mWidth = width;
         mHeight = height;
         speed = pspeed;
-        xvariance = xv;
-        yvariance = yv;
         flyProb = fp;
         power = p;
         worth = w;
@@ -89,6 +89,14 @@
         [self addChild:splashClip];
         [splashClip addEventListener:@selector(onSplashCompleted:) atObject:self forType:SP_EVENT_TYPE_MOVIE_COMPLETED];
         
+        burnClip = [SPMovieClip movieWithFrames:[Game textures:@"burn"] fps:28.0f];
+        burnClip.loop = NO;
+        burnClip.width = mWidth;
+        burnClip.height = mHeight;
+        burnClip.visible = NO;
+        [self addChild:burnClip];
+        [burnClip addEventListener:@selector(onSplashCompleted:) atObject:self forType:SP_EVENT_TYPE_MOVIE_COMPLETED];
+
         [self addEventListener:@selector(onTouched:) atObject:self forType:SP_EVENT_TYPE_TOUCH];
         flying = YES;
         flyClip.visible = YES;
@@ -115,6 +123,17 @@
     [mJuggler addObject:splashClip];
 }
 
+-(void)burn {
+    flying = NO;
+    flyClip.visible = NO;
+    [flyClip pause];
+    suckClip.visible = NO;
+    [suckClip pause];
+    burnClip.visible = YES;
+    [burnClip play];
+    [mJuggler addObject:burnClip];
+}
+
 -(void)onSplashCompleted:(SPEvent *)event {
     //[mJuggler removeAllObjects];
     //[self removeAllChildren];
@@ -138,7 +157,7 @@
     double x = self.x + velocity.x*seconds;
     double y = self.y + velocity.y*seconds;
     if (x < 0 || x + mWidth > maxWidth) { x = self.x + -1*velocity.x*seconds; [velocity reverseX];} 
-    if (y < statsHeight + 2 || y + mHeight > maxHeight) { y = self.y + -1*velocity.y*seconds; [velocity reverseY];} 
+    if (y < statsHeight + 2 || y + mHeight*2 > maxHeight) { y = self.y + -1*velocity.y*seconds; [velocity reverseY];} 
     self.x = x;
     self.y = y;
     currDistance += dist;
@@ -164,6 +183,7 @@
 -(void)interruptSucking {
     if (!flying) { 
         flying = YES;
+        lcanSuck = NO;
         [self animOver:nil];
     }
 }
@@ -175,8 +195,9 @@
         [event release];
     }
     Playground* pg = ([self.parent isKindOfClass:[Playground class]]) ? (Playground*)self.parent : nil;
-    if ((pg && !pg.canSuck) || arc4random()%1000/1000.0 <= flyProb) {
+    if ((pg && !pg.canSuck) || !lcanSuck || arc4random()%1000/1000.0 <= flyProb) {
         [suckClip pause];
+        lcanSuck = YES;
         [flyClip play];
         suckClip.visible = NO;
         flyClip.visible = YES;
@@ -197,9 +218,14 @@
         [self dispatchEvent:event];
         [event release];
         
-        if(life == 1) {
-            life--;
-            [self splash];
+        if(life == 1 || p.mustBurn) {
+            if (!p.mustBurn) {
+                life--;
+                [self splash];
+            } else {
+                life = 0.0;
+                [self burn];
+            }
         } else {
             life--;
             onColorTRansformation = YES;

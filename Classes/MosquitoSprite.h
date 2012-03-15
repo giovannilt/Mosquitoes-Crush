@@ -17,8 +17,6 @@
     double mWidth;
     double mHeight;
     double flyProb;
-    int xvariance;
-    int yvariance;
     float speed;
     BOOL flying;
     int life;
@@ -27,9 +25,10 @@
     SPMovieClip* flyClip;
     SPMovieClip* suckClip;
     SPMovieClip* splashClip;
+    SPMovieClip* burnClip;
     float maxWidth;
     float maxHeight;
-    float maxDisplacement;
+
     float statsHeight;
 }
 
@@ -38,7 +37,7 @@
 @property (nonatomic, assign) double mHeight;
 -(void) advanceTime:(double) seconds;
 -(void)onTouched:(SPTouchEvent *)event;
-- (id)initWithWidth:(double) width andHeight:(double) height speed:(float) pspeed xvariance:(int) xv yvariance:(int) yv flyprob:(double) fp life:(int) l power:(int) p worth:(int) w maxW:(float) maxW maxH:(float) maxH maxDisp:(float) maxDisp statsH:(float) statsH;
+- (id)initWithWidth:(double) width andHeight:(double) height speed:(float) pspeed flyprob:(double) fp life:(int) l power:(int) p worth:(int) w maxW:(float) maxW maxH:(float) maxH statsH:(float) statsH;
 -(void) initColor;
 -(void) interruptSucking;
 @end

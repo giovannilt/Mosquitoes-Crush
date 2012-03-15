@@ -19,8 +19,9 @@
         self.width = w;
         self.height = h;
         SPImage* bck = [SPImage imageWithTexture:[Game texture:iname]];
+        double ratio = w / bck.width;
         bck.width = w;
-        bck.height = h;
+        bck.height *= ratio;
         [self addChild:bck];
         [self addEventListener:@selector(onTouch:) atObject:self forType:SP_EVENT_TYPE_TOUCH];
     }
@@ -59,6 +60,26 @@
     [mJuggler addObject:tween];
     
     [tween addEventListener:@selector(onAnimationCompleted:) atObject:self forType:SP_EVENT_TYPE_TWEEN_COMPLETED];
+}
+
+-(BOOL)terminateGiftSameClass {
+    Playground* p = (Playground*)self.parent;
+    BOOL someoneGone = NO;
+    if (p) {
+        for (GiftSprite* g in p.gifts) {
+            if (g != self && [g isKindOfClass:[self class]]) {
+                [g terminate];
+                someoneGone = YES;
+            }
+        }
+    }
+    return someoneGone;
+}
+
+-(void)terminate {
+    [mJuggler removeAllObjects];
+    self.alpha = 0.0;
+    [self removeFromParent];
 }
 
 - (void)onAnimationCompleted:(SPEvent *)event {
