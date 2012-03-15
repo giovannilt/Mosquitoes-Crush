@@ -44,7 +44,7 @@
 
 -(void) killit:(SPTouchEvent*) event;
 
--(void) launchMosquitoAtX:(double) x Y:(double) y FlyProb:(double) fp Life:(double) lif Power:(double) pow;
+-(void) launchMosquitoAtX:(double) x Y:(double) y FlyProb:(double) fp Life:(double) lif Power:(double) pow  Worth:(double) worth;
 
 -(void) stopGame;
 

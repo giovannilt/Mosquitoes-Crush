@@ -12,7 +12,7 @@
     SPJuggler* mJuggler;
 }
 
-@property (nonatomic, assign) double TOTAL;
+@property (nonatomic, assign) int TOTAL;
 
 - (id)initWithWidth:(double) w height:(double) h points:(int) p hits:(int) hits misses:(int) miss longestCombo:(int) lc;
 -(void) advanceTime:(double) seconds;

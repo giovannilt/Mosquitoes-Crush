@@ -27,8 +27,6 @@
 		F96CBAFA1511375000B75619 /* atwbold.png in Resources */ = {isa = PBXBuildFile; fileRef = F96CBAF81511375000B75619 /* atwbold.png */; };
 		F96CBAFD151137C600B75619 /* atwregular.fnt in Resources */ = {isa = PBXBuildFile; fileRef = F96CBAFB151137C600B75619 /* atwregular.fnt */; };
 		F96CBAFE151137C600B75619 /* atwregular.png in Resources */ = {isa = PBXBuildFile; fileRef = F96CBAFC151137C600B75619 /* atwregular.png */; };
-		F98187CC150FEFC400D1B986 /* atlas.png in Resources */ = {isa = PBXBuildFile; fileRef = F98187CA150FEFC400D1B986 /* atlas.png */; };
-		F98187CD150FEFC400D1B986 /* atlas.xml in Resources */ = {isa = PBXBuildFile; fileRef = F98187CB150FEFC400D1B986 /* atlas.xml */; };
 		F98187D0150FF06A00D1B986 /* SprayGift.m in Sources */ = {isa = PBXBuildFile; fileRef = F98187CF150FF06A00D1B986 /* SprayGift.m */; };
 		F9A1A3AE1504F5FE00F99E73 /* MosquitoSprite.m in Sources */ = {isa = PBXBuildFile; fileRef = F9A1A3AD1504F5FE00F99E73 /* MosquitoSprite.m */; };
 		F9A1A3B11504F9A600F99E73 /* Playground.m in Sources */ = {isa = PBXBuildFile; fileRef = F9A1A3B01504F9A600F99E73 /* Playground.m */; };
@@ -36,6 +34,8 @@
 		F9A4EF251507997D008FF04A /* NumberField.m in Sources */ = {isa = PBXBuildFile; fileRef = F9A4EF241507997D008FF04A /* NumberField.m */; };
 		F9A65F93150D37F200F265E7 /* MainMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = F9A65F92150D37F200F265E7 /* MainMenu.m */; };
 		F9C2B6711511E8CB0077E8C5 /* Vector2D.m in Sources */ = {isa = PBXBuildFile; fileRef = F9C2B6701511E8CB0077E8C5 /* Vector2D.m */; };
+		F9C2B67E15122DA70077E8C5 /* atlas.png in Resources */ = {isa = PBXBuildFile; fileRef = F9C2B67C15122DA70077E8C5 /* atlas.png */; };
+		F9C2B67F15122DA70077E8C5 /* atlas.xml in Resources */ = {isa = PBXBuildFile; fileRef = F9C2B67D15122DA70077E8C5 /* atlas.xml */; };
 		F9D660141507A72B001B9D9B /* SuckedEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = F9D660131507A72B001B9D9B /* SuckedEvent.m */; };
 		F9D660211507BA3D001B9D9B /* GameOver.m in Sources */ = {isa = PBXBuildFile; fileRef = F9D660201507BA3D001B9D9B /* GameOver.m */; };
 		F9DD642D150F3EED005B6AC7 /* GiftSprite.m in Sources */ = {isa = PBXBuildFile; fileRef = F9DD642C150F3EED005B6AC7 /* GiftSprite.m */; };
@@ -91,8 +91,6 @@
 		F96CBAF81511375000B75619 /* atwbold.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = atwbold.png; sourceTree = "<group>"; };
 		F96CBAFB151137C600B75619 /* atwregular.fnt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = atwregular.fnt; sourceTree = "<group>"; };
 		F96CBAFC151137C600B75619 /* atwregular.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = atwregular.png; sourceTree = "<group>"; };
-		F98187CA150FEFC400D1B986 /* atlas.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = atlas.png; sourceTree = "<group>"; };
-		F98187CB150FEFC400D1B986 /* atlas.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = atlas.xml; sourceTree = "<group>"; };
 		F98187CE150FF06A00D1B986 /* SprayGift.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SprayGift.h; sourceTree = "<group>"; };
 		F98187CF150FF06A00D1B986 /* SprayGift.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SprayGift.m; sourceTree = "<group>"; };
 		F9A1A37115012E3A00F99E73 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
@@ -108,6 +106,8 @@
 		F9A65F92150D37F200F265E7 /* MainMenu.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainMenu.m; sourceTree = "<group>"; };
 		F9C2B66F1511E8CB0077E8C5 /* Vector2D.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Vector2D.h; sourceTree = "<group>"; };
 		F9C2B6701511E8CB0077E8C5 /* Vector2D.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Vector2D.m; sourceTree = "<group>"; };
+		F9C2B67C15122DA70077E8C5 /* atlas.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = atlas.png; sourceTree = "<group>"; };
+		F9C2B67D15122DA70077E8C5 /* atlas.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = atlas.xml; sourceTree = "<group>"; };
 		F9D660121507A72B001B9D9B /* SuckedEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SuckedEvent.h; sourceTree = "<group>"; };
 		F9D660131507A72B001B9D9B /* SuckedEvent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SuckedEvent.m; sourceTree = "<group>"; };
 		F9D6601F1507BA3D001B9D9B /* GameOver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameOver.h; sourceTree = "<group>"; };
@@ -239,14 +239,14 @@
 		F9A1A37015012DAE00F99E73 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				F9C2B67C15122DA70077E8C5 /* atlas.png */,
+				F9C2B67D15122DA70077E8C5 /* atlas.xml */,
 				F96CBAFB151137C600B75619 /* atwregular.fnt */,
 				F96CBAFC151137C600B75619 /* atwregular.png */,
 				F96CBAF71511375000B75619 /* atwbold.fnt */,
 				F96CBAF81511375000B75619 /* atwbold.png */,
 				F96CBAF31511368C00B75619 /* mf.fnt */,
 				F96CBAF41511368C00B75619 /* mf.png */,
-				F98187CA150FEFC400D1B986 /* atlas.png */,
-				F98187CB150FEFC400D1B986 /* atlas.xml */,
 				F9A1A37115012E3A00F99E73 /* Default.png */,
 			);
 			name = Images;
@@ -329,14 +329,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				F9207780150A6C5C006B81CD /* Default.png in Resources */,
-				F98187CC150FEFC400D1B986 /* atlas.png in Resources */,
-				F98187CD150FEFC400D1B986 /* atlas.xml in Resources */,
 				F96CBAF51511368C00B75619 /* mf.fnt in Resources */,
 				F96CBAF61511368C00B75619 /* mf.png in Resources */,
 				F96CBAF91511375000B75619 /* atwbold.fnt in Resources */,
 				F96CBAFA1511375000B75619 /* atwbold.png in Resources */,
 				F96CBAFD151137C600B75619 /* atwregular.fnt in Resources */,
 				F96CBAFE151137C600B75619 /* atwregular.png in Resources */,
+				F9C2B67E15122DA70077E8C5 /* atlas.png in Resources */,
+				F9C2B67F15122DA70077E8C5 /* atlas.xml in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

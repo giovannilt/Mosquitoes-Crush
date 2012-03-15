@@ -30,7 +30,7 @@
         img.height = h;
         [self addChild:img];
     
-        SPTextField* points = [SPTextField textFieldWithText:@"score:"];
+        SPTextField* points = [SPTextField textFieldWithText:@"points:"];
         points.x = 90;
         points.y = 10;
         points.fontName = [Game fontATWR];

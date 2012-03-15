@@ -23,7 +23,7 @@
     BOOL flying;
     int life;
     int power;
-    int worth;
+    double worth;
     SPMovieClip* flyClip;
     SPMovieClip* suckClip;
     SPMovieClip* splashClip;
@@ -33,7 +33,7 @@
     float statsHeight;
 }
 
-@property (nonatomic, assign) int worth;
+@property (nonatomic, assign) double worth;
 @property (nonatomic, assign) double mWidth;
 @property (nonatomic, assign) double mHeight;
 -(void) advanceTime:(double) seconds;

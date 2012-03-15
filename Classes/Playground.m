@@ -61,7 +61,7 @@
         bckImg = [SPImage imageWithTexture:[Game texture:@"gamebg"]];
         [self addChild:bckImg];
         
-        points = [[NumberField alloc] initWithText:@"Kills: "];
+        points = [[NumberField alloc] initWithText:@"Points: "];
         points.value = 0;
         points.fontName = [Game fontMF];
         points.color = 0x33cc66;
@@ -110,6 +110,7 @@
         comboTF.alpha = 0;
         comboTF.kerning = YES;
         [self addChild:comboTF];
+        comboTF.width = 150;
         
         statsHeight = 20;
         
@@ -128,7 +129,7 @@
     [mJuggler addObject:tween];
 }
 
--(void) launchMosquitoAtX:(double) x Y:(double) y FlyProb:(double) fp Life:(double) lif Power:(double) pow {
+-(void) launchMosquitoAtX:(double) x Y:(double) y FlyProb:(double) fp Life:(double) lif Power:(double) pow Worth:(double) worth {
     MosquitoSprite* m = [[MosquitoSprite alloc] initWithWidth:60 andHeight:48 speed:150.0 xvariance:50 yvariance:40 flyprob:fp life:lif power:pow worth:lif maxW:self.width maxH:self.height maxDisp:100.0 statsH:statsHeight];
     [m addEventListener:@selector(killit:) atObject:self forType:EVENT_TYPE_MOSQUITO_TOUCHED];
     [m addEventListener:@selector(sucked:) atObject:self forType:EVENT_TYPE_MOSQUITO_SUCKED];
