@@ -35,6 +35,7 @@
 		F9A1A3B41505005300F99E73 /* MosquitoTouchEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = F9A1A3B31505005300F99E73 /* MosquitoTouchEvent.m */; };
 		F9A4EF251507997D008FF04A /* NumberField.m in Sources */ = {isa = PBXBuildFile; fileRef = F9A4EF241507997D008FF04A /* NumberField.m */; };
 		F9A65F93150D37F200F265E7 /* MainMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = F9A65F92150D37F200F265E7 /* MainMenu.m */; };
+		F9C2B6711511E8CB0077E8C5 /* Vector2D.m in Sources */ = {isa = PBXBuildFile; fileRef = F9C2B6701511E8CB0077E8C5 /* Vector2D.m */; };
 		F9D660141507A72B001B9D9B /* SuckedEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = F9D660131507A72B001B9D9B /* SuckedEvent.m */; };
 		F9D660211507BA3D001B9D9B /* GameOver.m in Sources */ = {isa = PBXBuildFile; fileRef = F9D660201507BA3D001B9D9B /* GameOver.m */; };
 		F9DD642D150F3EED005B6AC7 /* GiftSprite.m in Sources */ = {isa = PBXBuildFile; fileRef = F9DD642C150F3EED005B6AC7 /* GiftSprite.m */; };
@@ -105,6 +106,8 @@
 		F9A4EF241507997D008FF04A /* NumberField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NumberField.m; sourceTree = "<group>"; };
 		F9A65F91150D37F200F265E7 /* MainMenu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainMenu.h; sourceTree = "<group>"; };
 		F9A65F92150D37F200F265E7 /* MainMenu.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainMenu.m; sourceTree = "<group>"; };
+		F9C2B66F1511E8CB0077E8C5 /* Vector2D.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Vector2D.h; sourceTree = "<group>"; };
+		F9C2B6701511E8CB0077E8C5 /* Vector2D.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Vector2D.m; sourceTree = "<group>"; };
 		F9D660121507A72B001B9D9B /* SuckedEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SuckedEvent.h; sourceTree = "<group>"; };
 		F9D660131507A72B001B9D9B /* SuckedEvent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SuckedEvent.m; sourceTree = "<group>"; };
 		F9D6601F1507BA3D001B9D9B /* GameOver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameOver.h; sourceTree = "<group>"; };
@@ -163,6 +166,8 @@
 				F9EA7068150F8D92004D868B /* HeartGift.m */,
 				F98187CE150FF06A00D1B986 /* SprayGift.h */,
 				F98187CF150FF06A00D1B986 /* SprayGift.m */,
+				F9C2B66F1511E8CB0077E8C5 /* Vector2D.h */,
+				F9C2B6701511E8CB0077E8C5 /* Vector2D.m */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -355,6 +360,7 @@
 				F9DD642D150F3EED005B6AC7 /* GiftSprite.m in Sources */,
 				F9EA7069150F8D93004D868B /* HeartGift.m in Sources */,
 				F98187D0150FF06A00D1B986 /* SprayGift.m in Sources */,
+				F9C2B6711511E8CB0077E8C5 /* Vector2D.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -39,7 +39,6 @@
 -(void) advanceTime:(double) seconds;
 -(void)onTouched:(SPTouchEvent *)event;
 - (id)initWithWidth:(double) width andHeight:(double) height speed:(float) pspeed xvariance:(int) xv yvariance:(int) yv flyprob:(double) fp life:(int) l power:(int) p worth:(int) w maxW:(float) maxW maxH:(float) maxH maxDisp:(float) maxDisp statsH:(float) statsH;
--(void) fly;
 -(void) initColor;
 -(void) interruptSucking;
 @end

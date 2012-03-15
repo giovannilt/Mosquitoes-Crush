@@ -18,6 +18,7 @@
 
 @interface Playground() {
     int longestCombo;
+    BOOL showResults;
 }
 -(void) sucked:(SuckedEvent*) event;
 -(void) gameover:(SPTouchEvent*) event;
@@ -39,6 +40,7 @@
 {
     self = [super init];
     if (self) {
+        showResults = YES;
         self.canSuck = YES;
         longestCombo = 0;
         combo = 1;
@@ -127,7 +129,7 @@
 }
 
 -(void) launchMosquitoAtX:(double) x Y:(double) y FlyProb:(double) fp Life:(double) lif Power:(double) pow {
-    MosquitoSprite* m = [[MosquitoSprite alloc] initWithWidth:60 andHeight:48 speed:0.5 xvariance:50 yvariance:40 flyprob:fp life:lif power:pow worth:lif maxW:self.width maxH:self.height maxDisp:100.0 statsH:statsHeight];
+    MosquitoSprite* m = [[MosquitoSprite alloc] initWithWidth:60 andHeight:48 speed:150.0 xvariance:50 yvariance:40 flyprob:fp life:lif power:pow worth:lif maxW:self.width maxH:self.height maxDisp:100.0 statsH:statsHeight];
     [m addEventListener:@selector(killit:) atObject:self forType:EVENT_TYPE_MOSQUITO_TOUCHED];
     [m addEventListener:@selector(sucked:) atObject:self forType:EVENT_TYPE_MOSQUITO_SUCKED];
     [m addEventListener:@selector(onHit:) atObject:self forType:EVENT_CORRECT_TOUCH];
@@ -136,7 +138,7 @@
     [m initColor];
     m.x = x;
     m.y = y;
-    [m fly];
+    //[m fly];
     [m release];
 }
 
@@ -240,8 +242,8 @@
 
 -(void)stopGame {
     @synchronized(self) {
-        if (!stop) {
-            stop = YES;
+        if (showResults) {
+            showResults = NO;
             gMsg = [[GameOver alloc] initWithWidth:300 height:162 points:points.value hits:countHit misses:countMiss longestCombo:longestCombo];
             float x = self.width/2.0 - 150;
             float y = self.height/2.0 -50 - 81;
@@ -276,7 +278,8 @@
     int damage = event.damage;
     if (life.value - damage <= 0) {
         damage = life.value;
-        [[mJuggler delayInvocationAtTarget:self byTime:1.0] stopGame];
+        stop = YES;
+        [[mJuggler delayInvocationAtTarget:self byTime:1.5] stopGame];
     }
     SPTween* tween = [SPTween tweenWithTarget:life time:0.2f];
     [tween animateProperty:@"value" targetValue:life.value - damage];

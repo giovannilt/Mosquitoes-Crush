@@ -11,15 +11,24 @@
 #import "Playground.h"
 #import "SuckedEvent.h"
 #import "Game.h"
+#import "Vector2D.h"
 
 @interface MosquitoSprite() {
     BOOL onColorTRansformation;
+    Vector2D* velocity;
+    int circleRadius;
+    double wanderAngle;
+    double wanderChange;
+    double changeDistance;
+    double currDistance;
 }
 -(void) suck;
 -(void) animOver:(SPEvent*) event;
 -(void) splash;
 -(void) onSplashCompleted:(SPEvent*) event;
 -(void) setOnColorTransformation:(BOOL) val;
+-(void) moveWithSeconds:(double) seconds;
+-(void) changeVelocity;
 @end
 
 @implementation MosquitoSprite
@@ -30,6 +39,12 @@
 {
     self = [super init];
     if (self) {
+        circleRadius = 30;
+        changeDistance = 300 + (arc4random()%1000/1000.0)*300 - 150;
+        currDistance = 0;
+        wanderAngle = 2*PI*(arc4random()%100/100.0);
+        wanderChange = 3;
+        velocity = [[Vector2D alloc] initWithX:(arc4random()%100/100.0)*pspeed - pspeed/2.0 andY:(arc4random()%100/100.0)*pspeed - pspeed/2.0];
         onColorTRansformation = NO;
         statsHeight = statsH;
         maxDisplacement = maxDisp;
@@ -75,7 +90,8 @@
         [splashClip addEventListener:@selector(onSplashCompleted:) atObject:self forType:SP_EVENT_TYPE_MOVIE_COMPLETED];
         
         [self addEventListener:@selector(onTouched:) atObject:self forType:SP_EVENT_TYPE_TOUCH];
-        flying = NO;
+        flying = YES;
+        flyClip.visible = YES;
         life = l;
     }
     
@@ -115,32 +131,34 @@
     [suckClip play];
 }
 
--(void)fly {
-    flying = YES;
-    flyClip.visible = YES;
-    SPTween* flyTween = [SPTween tweenWithTarget:self time:speed transition:SP_TRANSITION_LINEAR];
-    double xdist = maxDisplacement - arc4random()%xvariance;
-    double ydist = maxDisplacement - arc4random()%yvariance;
-    double xrand = arc4random()%99;
-    double yrand = arc4random()%99;
-    double xdir = (xrand > 33) ? ((xrand > 66) ? 0 : 1) : -1;
-    double ydir = (yrand > 33) ? ((yrand > 66) ? 0 : 1) : -1;
-    double pHeight = statsHeight;
-    if (xdir == 0 && ydir == 0) {
-        ydir = (yrand > 48.5) ? 1 : -1;
+-(void)moveWithSeconds:(double)seconds {
+    [self changeVelocity];
+    [velocity truncate:speed];
+    double dist = velocity.length*seconds;
+    double x = self.x + velocity.x*seconds;
+    double y = self.y + velocity.y*seconds;
+    if (x < 0 || x + mWidth > maxWidth) { x = self.x + -1*velocity.x*seconds; [velocity reverseX];} 
+    if (y < statsHeight + 2 || y + mHeight > maxHeight) { y = self.y + -1*velocity.y*seconds; [velocity reverseY];} 
+    self.x = x;
+    self.y = y;
+    currDistance += dist;
+    if (currDistance >= changeDistance) {
+        currDistance = 0.0;
+        [self animOver:nil];
     }
-    double nx = self.x + xdir*xdist;
-    double ny = self.y + ydir*ydist;
-    if (nx + mWidth > maxWidth || nx < 0) {
-        nx = self.x + -1*xdir*xdist;
-    }
-    if (ny + mHeight > maxHeight || ny < pHeight+2) {
-        ny = self.y + -1*ydir*ydist;
-    }
-    [flyTween animateProperty:@"x" targetValue:nx];
-    [flyTween animateProperty:@"y" targetValue:ny];
-    [flyTween addEventListener:@selector(animOver:) atObject:self forType:SP_EVENT_TYPE_TWEEN_COMPLETED];
-    [mFlyJuggler addObject:flyTween];
+}
+
+-(void)changeVelocity {
+    Vector2D* circleMiddle = [[Vector2D alloc] initWithX:velocity.x andY:velocity.y];
+    [[circleMiddle normalize] multiply:circleRadius];
+    Vector2D* wanderForce = [[Vector2D alloc] initWithX:0.0 andY:0.0];
+    wanderForce.length = 100;
+    wanderForce.angle = wanderAngle;
+    wanderAngle += (arc4random()%1000/1000.0) * wanderChange - wanderChange*0.5;
+    [circleMiddle add:wanderForce.vector];
+    [velocity add:circleMiddle.vector];
+    [circleMiddle release];
+    [wanderForce release];
 }
 
 -(void)interruptSucking {
@@ -161,7 +179,8 @@
         [suckClip pause];
         [flyClip play];
         suckClip.visible = NO;
-        [self fly];
+        flyClip.visible = YES;
+        flying = YES;
     } else {
         [flyClip pause];
         flyClip.visible = NO;
@@ -207,6 +226,7 @@
 -(void) advanceTime:(double) seconds {
     if (flying) {
         [mFlyJuggler advanceTime:seconds];
+        [self moveWithSeconds:seconds];
     } else {
         [mSuckJug advanceTime:seconds];
     }
@@ -214,6 +234,7 @@
 }
 
 -(void)dealloc {
+    [velocity release];
     [mJuggler release];
     [mSuckJug release];
     [mFlyJuggler release];

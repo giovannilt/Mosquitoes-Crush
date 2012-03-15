@@ -36,7 +36,7 @@
     SPTween* tween = [SPTween tweenWithTarget:self time:0.5 transition:SP_TRANSITION_EASE_IN_OUT];
     [tween moveToX:275 y:25];
     [mJuggler addObject:tween];
-    tween = [SPTween tweenWithTarget:self time:4.5 transition:SP_TRANSITION_EASE_OUT_BOUNCE];
+    tween = [SPTween tweenWithTarget:self time:5.0 transition:SP_TRANSITION_EASE_OUT_BOUNCE];
     tween.delay = 0.5;
     [tween animateProperty:@"alpha" targetValue:0.1];
     [tween addEventListener:@selector(onEffectEnded:) atObject:self forType:SP_EVENT_TYPE_TWEEN_COMPLETED];

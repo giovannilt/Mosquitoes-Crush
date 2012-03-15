@@ -66,16 +66,16 @@
         [self animateAllButtons];
         
         mosquitoes = [SPSprite sprite];
-        int width = 200;
-        int height = 100;
+        int width = 170;
+        int height = 80;
         mosquitoes.width = width;
         mosquitoes.height = height;
-        mosquitoes.x = 30;
-        mosquitoes.y = 350;
-     //   SPQuad* q = [SPQuad quadWithWidth:width height:height color:0xffffff];
-     //   [mosquitoes addChild:q];
+        mosquitoes.x = 60;
+        mosquitoes.y = 370;
+       // SPQuad* q = [SPQuad quadWithWidth:width height:height color:0xffffff];
+       // [mosquitoes addChild:q];
         for(int i =0; i < 5; i++) {
-            MosquitoSprite* m1 = [[MosquitoSprite alloc] initWithWidth:20 andHeight:17 speed:0.2 xvariance:10 yvariance:5 flyprob:1.0 life:0.0 power:0 worth:0 maxW:width maxH:height maxDisp:20 statsH:0.0];
+            MosquitoSprite* m1 = [[MosquitoSprite alloc] initWithWidth:20 andHeight:17 speed:50.0 xvariance:10 yvariance:5 flyprob:1.0 life:0.0 power:0 worth:0 maxW:width maxH:height maxDisp:20 statsH:0.0];
             m1.x = width/2.0;
             m1.y = height/2.0;
             [mosquitoes addChild:m1];
@@ -172,6 +172,7 @@
 
 -(void)marathon {
     [self countDownValue:3];
+    //[mPlayground launchMosquitoAtX:160 Y:240 FlyProb:1.0 Life:1 Power:1];
 }
 
 -(void) countDownValue:(int)val {
@@ -206,7 +207,7 @@
 
 -(void)startMarathon {
     for (int i =0; i < 7; i++) {
-        [mPlayground launchMosquitoAtX:arc4random()%(int)(self.width-60) Y:arc4random()%(int)(self.height-70)+22 FlyProb:0.75 Life:1 Power:3];
+        [mPlayground launchMosquitoAtX:arc4random()%(int)(self.width-90) + 15 Y:arc4random()%(int)(self.height-100)+37 FlyProb:0.75 Life:1 Power:3];
     }
     kills = 0;
     [mPlayground addEventListener:@selector(killit:) atObject:self forType:EVENT_TYPE_MOSQUITO_TOUCHED];
@@ -218,15 +219,15 @@
         double prob = arc4random()%1000/1000.0;
         if (prob <= 0.5) {
             for (int i =0; i < 4; i++) {
-                [[mInGameJuggler delayInvocationAtTarget:mPlayground byTime:0.5*i] launchMosquitoAtX:arc4random()%(int)(self.width-60) Y:arc4random()%(int)(self.height-70)+22 FlyProb:0.75 Life:1 Power:3];
+                [[mInGameJuggler delayInvocationAtTarget:mPlayground byTime:0.5*i] launchMosquitoAtX:arc4random()%(int)(self.width-90)+15 Y:arc4random()%(int)(self.height-100)+37 FlyProb:0.75 Life:1 Power:3];
             }
         } else if (prob <= 0.85) {
             for (int i =0; i < 3; i++) {
-                [[mInGameJuggler delayInvocationAtTarget:mPlayground byTime:0.7*i] launchMosquitoAtX:arc4random()%(int)(self.width-60) Y:arc4random()%(int)(self.height-70)+22 FlyProb:0.65 Life:2 Power:2];
+                [[mInGameJuggler delayInvocationAtTarget:mPlayground byTime:0.7*i] launchMosquitoAtX:arc4random()%(int)(self.width-90)+15 Y:arc4random()%(int)(self.height-100)+37 FlyProb:0.65 Life:2 Power:2];
             }
         } else {
             for (int i =0; i < 2; i++) {
-                [[mInGameJuggler delayInvocationAtTarget:mPlayground byTime:1*i] launchMosquitoAtX:arc4random()%(int)(self.width-60) Y:arc4random()%(int)(self.height-70)+22 FlyProb:0.60 Life:3 Power:3];
+                [[mInGameJuggler delayInvocationAtTarget:mPlayground byTime:1*i] launchMosquitoAtX:arc4random()%(int)(self.width-90)+15 Y:arc4random()%(int)(self.height-100)+37 FlyProb:0.50 Life:3 Power:3];
             }
         }
         kills = 0;
