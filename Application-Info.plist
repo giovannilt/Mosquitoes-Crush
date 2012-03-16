@@ -10,14 +10,21 @@
 	<string>${EXECUTABLE_NAME}</string>
 	<key>CFBundleIconFile</key>
 	<string></string>
+	<key>CFBundleIconFiles</key>
+	<array>
+		<string>66aefd40deb2d5cc60c016d2f7dfa737.png</string>
+		<string>icon.png</string>
+	</array>
 	<key>CFBundleIdentifier</key>
-	<string>com.gamua.${PRODUCT_NAME:rfc1034identifier}</string>
+	<string>com.unnaturalcreations.${PRODUCT_NAME:rfc1034identifier}</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleName</key>
 	<string>${PRODUCT_NAME}</string>
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
+	<key>CFBundleShortVersionString</key>
+	<string>1.0</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
 	<key>CFBundleVersion</key>

@@ -119,7 +119,7 @@
         [lgcN release];
         
         SPTextField* total = [SPTextField textFieldWithText:@"TOTAL:"];
-        total.x = 90;
+        total.x = 60;
         total.y = 60;
         total.fontName = [Game fontATWB];
         total.color = 0xff0000;
@@ -131,7 +131,7 @@
         
         NumberField* totalN = [[NumberField alloc] initWithText:@""];
         totalN.value = 0;
-        totalN.x = 220;
+        totalN.x = 190;
         totalN.y = 60;
         totalN.fontName = [Game fontATWB];
         totalN.color = 0xff0000;

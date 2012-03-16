@@ -335,7 +335,7 @@
 
 -(void)placeGiftAtX:(double)x Y:(double)y Width:(double)w andHeight:(double)h{
     double probGift = arc4random()%1000/1000.0;
-    if (probGift <= 0.85) {
+    if (probGift <= 0.25) {
         double oW = w, oH = h;
         w = w*0.6;
         h = h*0.6;
