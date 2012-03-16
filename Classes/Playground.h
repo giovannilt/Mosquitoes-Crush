@@ -13,9 +13,12 @@
 
 #define EVENT_GAMEOVER @"playgroundgamoeover"
 #define EVENT_INCORRECT_TOUCH @"incorrecttouch"
+#define EVENT_CLOCK_ENDED @"clockended"
 
 @interface Playground : SPSprite {
     SPJuggler* mJuggler;
+    SPJuggler* mClockJuggler;
+    SPMovieClip* clockClip;
     NSMutableArray* mosquitoes;
     double statsHeight;
     NumberField* points;
@@ -57,5 +60,9 @@
 
 -(void) interruptSucking;
 
--(void) swapBG;
+-(void) swapBGtoNormal;
+
+-(void) swapBGToCream;
+
+-(void) showClock:(double) time;
 @end

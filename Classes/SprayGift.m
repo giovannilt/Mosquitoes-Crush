@@ -31,7 +31,7 @@
     [mJuggler removeAllObjects];
     self.alpha = 1.0;
     if (![self terminateGiftSameClass]) {
-        [pg swapBG];
+        [pg swapBGToCream];
         pg.canSuck = NO;
         [pg interruptSucking];
     }
@@ -48,7 +48,7 @@
 
 -(void)onEffectEnded:(SPEvent *)event {
     Playground* pg = (Playground*)self.parent;
-    [pg swapBG];
+    [pg swapBGtoNormal];
     pg.canSuck = YES;
     self.alpha = 0.0;
     [self removeFromParent];    

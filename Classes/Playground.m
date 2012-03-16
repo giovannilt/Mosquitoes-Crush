@@ -35,6 +35,9 @@
 -(void) killPacific:(MosquitoTouchEvent*) event;
 -(void) hitPacific:(SPEvent*) event;
 -(void) removePacific:(PacificSprite*) pacific Transform:(BOOL) trans;
+-(void) stopClock;
+-(void) onClockTouched:(SPTouchEvent*) event;
+-(void) onClockEnded:(SPEvent*) event;
 @end
 
 @implementation Playground
@@ -55,11 +58,13 @@
         countMiss = 0;
         colors = [[NSArray arrayWithObjects:[NSNumber numberWithInt:0xffffff], [NSNumber numberWithInt:0xff9999], [NSNumber numberWithInt:0xff3333] , nil] retain];
         mJuggler = [[SPJuggler alloc] init];
+        mClockJuggler = [[SPJuggler alloc] init];
         mosquitoes = [[NSMutableArray alloc] init];
         gifts = [[NSMutableArray alloc] init];
         
         self.width = width;
         self.height = height;
+        
         
         spraybckImg = [SPImage imageWithTexture:[Game texture:@"spraygamebg"]];
         [self addChild:spraybckImg];
@@ -91,6 +96,18 @@
         life.kerning = YES;
         [self addChild:life];
         
+        clockClip = [SPMovieClip movieWithFrames:[Game textures:@"clock"] fps:10.0];
+        clockClip.visible = NO;
+        clockClip.loop = NO;
+        clockClip.width = clockClip.width*0.7;
+        clockClip.height = clockClip.height*0.7;
+        clockClip.x = self.width/2.0 - clockClip.width/2.0;
+        clockClip.y = 1;
+        [self addChild:clockClip];
+        [mClockJuggler addObject:clockClip];
+        [clockClip addEventListener:@selector(onClockEnded:) atObject:self forType:SP_EVENT_TYPE_MOVIE_COMPLETED];
+        [clockClip addEventListener:@selector(onClockTouched:) atObject:self forType:SP_EVENT_TYPE_TOUCH];
+
         SPImage* iheart = [SPImage imageWithTexture:[Game texture:@"heart"]];
         iheart.width = 15;
         iheart.height = 15;
@@ -129,10 +146,51 @@
     return self;
 }
 
--(void)swapBG {
+-(void)showClock:(double)time {
+    double fps = 7.0 / time;
+    clockClip.fps = fps;
+    clockClip.visible = YES;
+    SPTween* tween = [SPTween tweenWithTarget:clockClip time:0.2];
+    [tween animateProperty:@"alpha" targetValue:1];
+    [mClockJuggler addObject:tween];
+    [clockClip setCurrentFrame:0];
+    [clockClip play];
+}
+
+-(void) stopClock {
+    [clockClip pause];
+    SPTween* tween = [SPTween tweenWithTarget:clockClip time:0.2];
+    [tween animateProperty:@"alpha" targetValue:0.0];
+    [mClockJuggler addObject:tween];
+    SPEvent* event = [[SPEvent alloc] initWithType:EVENT_CLOCK_ENDED bubbles:NO];
+    [self dispatchEvent:event];
+    [event release];
+}
+
+-(void)onClockTouched:(SPTouchEvent *)event {
+    SPTouch *touch = [[event touchesWithTarget:clockClip andPhase:SPTouchPhaseEnded] anyObject];
+    if(touch) {
+        [self stopClock];
+        SPTween* tween = [SPTween tweenWithTarget:points time:0.2f];
+        [tween animateProperty:@"value" targetValue:points.value + 10];
+        [mJuggler addObject:tween];
+    }
+}
+
+-(void)onClockEnded:(SPEvent *)event {
+    [self stopClock];
+}
+
+-(void) swapBGtoNormal {
     SPTween* tween = [SPTween tweenWithTarget:bckImg time:0.3];
-    [tween animateProperty:@"alpha" targetValue:1 - bckImg.alpha];
-    [mJuggler addObject:tween];
+    [tween animateProperty:@"alpha" targetValue:1];
+    [mJuggler addObject:tween];    
+}
+
+-(void)swapBGToCream {
+    SPTween* tween = [SPTween tweenWithTarget:bckImg time:0.3];
+    [tween animateProperty:@"alpha" targetValue:0];
+    [mJuggler addObject:tween];    
 }
 
 -(void) launchMosquitoAtX:(double) x Y:(double) y FlyProb:(double) fp Life:(double) lif Power:(double) pow Worth:(double) worth {
@@ -313,7 +371,7 @@
             gMsg.scaleX = 0;
             gMsg.alpha = 0;
             [self addChild:gMsg];
-            [gMsg addEventListener:@selector(gameover:) atObject:self forType:SP_EVENT_TYPE_TOUCH];
+            [[mJuggler delayInvocationAtTarget:gMsg byTime:3.5] addEventListener:@selector(gameover:) atObject:self forType:SP_EVENT_TYPE_TOUCH];
             SPTween* tween = [SPTween tweenWithTarget:gMsg time:0.1];
             [tween scaleTo:1];
             [tween moveToX:x y:y];
@@ -349,6 +407,7 @@
 -(void) advanceTime:(double) seconds {
     [mJuggler advanceTime:seconds];
     if(!stop) {
+        [mClockJuggler advanceTime:seconds];
         NSArray* copyM = [mosquitoes copy]; 
         for (MosquitoSprite* m in copyM) {
             if (!m.visible) {
@@ -376,6 +435,7 @@
     [gifts release];
     [comboTF release];
     [mJuggler release];
+    [mClockJuggler release];
     [life release];
     [points release];
     [mosquitoes release];

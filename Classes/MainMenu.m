@@ -11,6 +11,17 @@
 #import "MosquitoSprite.h"
 #import "MosquitoTouchEvent.h"
 
+int totalWave = 4;
+int currentWave = 0;
+
+double waves[][11] = {
+    //Time_0, Pacific_1, Lvl1_2, Lvl1WI_3, Lvl1WE_4, Lvl2_5, Lvl2WI_6, Lvl2WE_7, Lvl3_8, Lvl3WI_9, Lvl3WE_10
+    { 20.0  , 0.0      , 15.0  , 0.5     , 1     , 0.0   , 0.0     , 0.0     , 0.0   , 0.0     , 0.0      },
+    { 25.0  , 0.0      , 10.0  , 0.5     , 1     , 3.0   , 1.0     , 1.5     , 0.0   , 0.0     , 0.0      },
+    { 25.0  , 2.0      , 10.0  , 0.5     , 1     , 3.0   , 1.0     , 1.5     , 0.0   , 0.0     , 0.0      },
+    { 30.0  , 3.0      , 10.0  , 0.5     , 1     , 4.0   , 1.0     , 1.5     , 2.0   , 1.5     , 5.0      }
+};
+
 @interface MainMenu() {
     int kills;
     int HScore;
@@ -30,6 +41,7 @@
 -(void) countDownValue:(int) val;
 -(void) killit:(MosquitoTouchEvent*) event;
 -(void) updateHighScore:(double) score;
+-(void) nextRound:(SPEvent*) event;
 @end
 
 @implementation MainMenu
@@ -178,6 +190,7 @@
 
 -(void)marathon {
     [self countDownValue:3];
+    currentWave = 0;
     //[mPlayground launchMosquitoAtX:160 Y:240 FlyProb:1.0 Life:1 Power:1];
 }
 
@@ -212,34 +225,43 @@
 }
 
 -(void)startMarathon {
-    [mPlayground launchPacificAtX:arc4random()%(int)(self.width-90) + 15 Y:arc4random()%(int)(self.height-150)+37];
-    for (int i =0; i < 7; i++) {
-        [mPlayground launchMosquitoAtX:arc4random()%(int)(self.width-90) + 15 Y:arc4random()%(int)(self.height-150)+37 FlyProb:0.75 Life:1 Power:1 Worth:1.5];
+    //[self nextRound:nil];
+    [mPlayground showClock:7.0];
+ //   [mPlayground addEventListener:@selector(killit:) atObject:self forType:EVENT_TYPE_MOSQUITO_TOUCHED];
+    [mPlayground addEventListener:@selector(nextRound:) atObject:self forType:EVENT_CLOCK_ENDED];
+}
+
+-(void)nextRound:(SPEvent *)event {
+    double time = 0;
+    for (int i = 0; i < waves[currentWave][1]; i++) {
+        [mPlayground launchPacificAtX:arc4random()%(int)(self.width-90) + 15 Y:arc4random()%(int)(self.height-150)+37];
     }
-    kills = 0;
-    [mPlayground addEventListener:@selector(killit:) atObject:self forType:EVENT_TYPE_MOSQUITO_TOUCHED];
+    for (int i =0; i < waves[currentWave][2]; i++) {
+        double prob = (arc4random()%1000/1000.0)*(waves[currentWave][4] - waves[currentWave][3]) + waves[currentWave][3];
+        time += prob;
+        [[mInGameJuggler delayInvocationAtTarget:mPlayground byTime:time] launchMosquitoAtX:arc4random()%(int)(self.width-90)+15 Y:arc4random()%(int)(self.height-150)+37 FlyProb:0.75 Life:1 Power:1 Worth:1.5];
+    }
+    time = 0;
+    for (int i =0; i < waves[currentWave][5]; i++) {
+        double prob = (arc4random()%1000/1000.0)*(waves[currentWave][7] - waves[currentWave][6]) + waves[currentWave][6];
+        time += prob;
+        [[mInGameJuggler delayInvocationAtTarget:mPlayground byTime:time] launchMosquitoAtX:arc4random()%(int)(self.width-90)+15 Y:arc4random()%(int)(self.height-150)+37 FlyProb:0.65 Life:2 Power:2 Worth:3];
+    }
+    time = 0;
+    for (int i =0; i < waves[currentWave][8]; i++) {
+        double prob = (arc4random()%1000/1000.0)*(waves[currentWave][10] - waves[currentWave][9]) + waves[currentWave][9];
+        time += prob;
+        [[mInGameJuggler delayInvocationAtTarget:mPlayground byTime:time] launchMosquitoAtX:arc4random()%(int)(self.width-90)+15 Y:arc4random()%(int)(self.height-150)+37 FlyProb:0.50 Life:3 Power:3 Worth:5.3];
+    }
+    if (currentWave + 1 < totalWave) {
+        currentWave++;
+        [[mGameoverJuggler delayInvocationAtTarget:mPlayground byTime:2.0] showClock:waves[currentWave-1][0]];
+    } else {
+        [[mGameoverJuggler delayInvocationAtTarget:mPlayground byTime:2.0] showClock:waves[currentWave][0]];
+    }
 }
 
 -(void)killit:(MosquitoTouchEvent *)event {
-    kills += event.mosquito.worth;
-    if (kills >= 4) {
-        double prob = arc4random()%1000/1000.0;
-        [mPlayground launchPacificAtX:arc4random()%(int)(self.width-90) + 15 Y:arc4random()%(int)(self.height-150)+37];
-        if (prob <= 0.5) {
-            for (int i =0; i < 4; i++) {
-                [[mInGameJuggler delayInvocationAtTarget:mPlayground byTime:0.5*i] launchMosquitoAtX:arc4random()%(int)(self.width-90)+15 Y:arc4random()%(int)(self.height-150)+37 FlyProb:0.75 Life:1 Power:1 Worth:1.5];
-            }
-        } else if (prob <= 0.85) {
-            for (int i =0; i < 3; i++) {
-                [[mInGameJuggler delayInvocationAtTarget:mPlayground byTime:0.7*i] launchMosquitoAtX:arc4random()%(int)(self.width-90)+15 Y:arc4random()%(int)(self.height-150)+37 FlyProb:0.65 Life:2 Power:2 Worth:3];
-            }
-        } else {
-            for (int i =0; i < 2; i++) {
-                [[mInGameJuggler delayInvocationAtTarget:mPlayground byTime:1*i] launchMosquitoAtX:arc4random()%(int)(self.width-90)+15 Y:arc4random()%(int)(self.height-150)+37 FlyProb:0.50 Life:3 Power:3 Worth:5.3];
-            }
-        }
-        kills = 0;
-    }
 }
 
 -(void)gameover:(SPEvent *)event {
