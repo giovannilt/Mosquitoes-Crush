@@ -153,7 +153,7 @@
 
 -(double)computeTotalFromPoints:(int)points Hits:(int)hits Misses:(int)misses LG:(int)lg {
     if (hits + misses > 0) {
-        return points * ((hits*1.0)/(hits + misses)) + lg * 7; 
+        return points + points * 0.4 * ((hits*1.0)/(hits + misses)) * lg; 
     } else {
         return 0.0;
     }

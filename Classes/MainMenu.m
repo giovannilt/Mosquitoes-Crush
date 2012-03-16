@@ -16,16 +16,20 @@ int currentWave = 0;
 
 double waves[][11] = {
     //Time_0, Pacific_1, Lvl1_2, Lvl1WI_3, Lvl1WE_4, Lvl2_5, Lvl2WI_6, Lvl2WE_7, Lvl3_8, Lvl3WI_9, Lvl3WE_10
-    { 20.0  , 0.0      , 15.0  , 0.5     , 1     , 0.0   , 0.0     , 0.0     , 0.0   , 0.0     , 0.0      },
-    { 25.0  , 0.0      , 10.0  , 0.5     , 1     , 3.0   , 1.0     , 1.5     , 0.0   , 0.0     , 0.0      },
-    { 25.0  , 2.0      , 10.0  , 0.5     , 1     , 3.0   , 1.0     , 1.5     , 0.0   , 0.0     , 0.0      },
-    { 30.0  , 3.0      , 10.0  , 0.5     , 1     , 4.0   , 1.0     , 1.5     , 2.0   , 1.5     , 5.0      }
+    { 20.0  , 0.0      , 7.0  , 0.5     , 1     , 0.0   , 0.0     , 0.0     , 0.0   , 0.0     , 0.0      },
+    { 25.0  , 0.0      , 6.0  , 0.5     , 1     , 3.0   , 1.0     , 1.5     , 0.0   , 0.0     , 0.0      },
+    { 25.0  , 2.0      , 7.0  , 0.5     , 1     , 3.0   , 2.0     , 1.5     , 0.0   , 0.0     , 0.0      },
+    { 30.0  , 3.0      , 6.0  , 0.5     , 1     , 4.0   , 1.0     , 1.5     , 2.0   , 1.5     , 5.0      }
 };
 
 @interface MainMenu() {
     int kills;
     int HScore;
+    double maxWidth;
+    double maxHeight;
     SPTextField* HScoreTF;
+    SPImage* HelpImg;
+    SPSprite* CreditsSprt;
 }
 -(void) onStart:(SPEvent*) event;
 -(float) animateMenuButton:(SPButton*) button targetY:(float) tY delay:(float) delay;
@@ -42,6 +46,8 @@ double waves[][11] = {
 -(void) killit:(MosquitoTouchEvent*) event;
 -(void) updateHighScore:(double) score;
 -(void) nextRound:(SPEvent*) event;
+-(void) onHelpTouched:(SPTouchEvent*) event;
+-(void) onCreditsTouched:(SPTouchEvent*) event;
 @end
 
 @implementation MainMenu
@@ -58,6 +64,8 @@ double waves[][11] = {
         [self addChild:bck];
         self.width = mW;
         self.height = mH;
+        maxWidth = mW;
+        maxHeight = mH;
         
         HScoreTF = [SPTextField textFieldWithText:@"ZZ Score: "];
         if (HScore == 0) {
@@ -75,7 +83,7 @@ double waves[][11] = {
         
         SPImage* sparrow = [SPImage imageWithTexture:[Game texture:@"sparrow"]];
         sparrow.x = 1;
-        sparrow.y = self.height - 40;
+        sparrow.y = maxHeight - 40;
         sparrow.alpha = 0.7;
         [self addChild:sparrow];
     
@@ -100,6 +108,44 @@ double waves[][11] = {
             [m1 release];
         }
         [self addChild:mosquitoes];
+        HelpImg = [SPImage imageWithTexture:[Game texture:@"helpbg"]];
+        HelpImg.x = mW;
+        HelpImg.y = 0;
+        HelpImg.width = mW;
+        HelpImg.height = mH;
+        HelpImg.alpha = 0.0;
+        HelpImg.visible = NO;
+        [HelpImg addEventListener:@selector(onHelpTouched:) atObject:self forType:SP_EVENT_TYPE_TOUCH];
+        [self addChild:HelpImg];    
+        
+        CreditsSprt = [SPSprite sprite];
+        CreditsSprt.x = mW;
+        CreditsSprt.y = 0;
+        CreditsSprt.width = mW;
+        CreditsSprt.height = mH;
+        CreditsSprt.alpha = 0.0;
+        CreditsSprt.visible = NO;
+        [CreditsSprt addEventListener:@selector(onCreditsTouched:) atObject:self forType:SP_EVENT_TYPE_TOUCH];
+        SPQuad* quad = [SPQuad quadWithWidth:mW height:mH];
+        quad.color = 0x000000;
+        [CreditsSprt addChild:quad];
+        SPTextField* txtFld = [SPTextField textFieldWithText:@"CREDITS\n\nDesign & Programming\nLuis Perez Sanchez"];
+        txtFld.fontName = @"MarkerFelt-Thin";
+        txtFld.color = 0xffffff;
+        txtFld.vAlign = SPVAlignTop;
+        txtFld.hAlign = SPHAlignLeft;
+        txtFld.x = 20;
+        txtFld.y = 50;
+        txtFld.width = mW - 40;
+        txtFld.fontSize = 20;
+        [CreditsSprt addChild:txtFld];
+        SPImage* spaBig = [SPImage imageWithTexture:[Game texture:@"sparrow"]];
+        spaBig.x = 20;
+        spaBig.y = 250;
+        spaBig.scaleX = 1.1;
+        spaBig.scaleY = 1.1;
+        [CreditsSprt addChild:spaBig];
+        [self addChild:CreditsSprt];
     }
     
     return self;
@@ -108,7 +154,7 @@ double waves[][11] = {
 -(void)resetButtons {
     int width = 150;
     int height = 71;
-    float x = (self.width - width) / 2.0;
+    float x = (maxWidth - width) / 2.0;
     y1 = 180;
     start.width = width;
     start.height = height;
@@ -119,7 +165,7 @@ double waves[][11] = {
 
     width = 120;
     height = 56;
-    x = (self.width - width) / 2.0;
+    x = (maxWidth - width) / 2.0;
     y2 = 245;
     help.width = width;
     help.height = height;
@@ -130,7 +176,7 @@ double waves[][11] = {
 
     width = 90;
     height = 42;
-    x = (self.width - width) / 2.0;
+    x = (maxWidth - width) / 2.0;
     y3 = 295;
     credits.width = width;
     credits.height = height;
@@ -142,8 +188,8 @@ double waves[][11] = {
 
 -(void)animateAllButtons {
     float time = [self animateMenuButton:start targetY:y1 delay:0];
-    time = [self animateMenuButton:help targetY:y2 delay:time/2.0];
-    [self animateMenuButton:credits targetY:y3 delay:time/2.0];    
+    time = [self animateMenuButton:help targetY:y2 delay:time/1.5];
+    [self animateMenuButton:credits targetY:y3 delay:time/1.5];    
 }
 
 -(void)createButtons {
@@ -161,27 +207,17 @@ double waves[][11] = {
 }
 
 -(float)animateMenuButton:(SPButton *)button targetY:(float)tY delay:(float)delay {
-    SPTween* stween = [SPTween tweenWithTarget:button time:0.5 transition:SP_TRANSITION_EASE_IN];
+    SPTween* stween = [SPTween tweenWithTarget:button time:0.6 transition:SP_TRANSITION_EASE_OUT_BACK];
     [stween animateProperty:@"scaleY" targetValue:1.0];
     [stween animateProperty:@"y" targetValue:tY];
     [stween animateProperty:@"alpha" targetValue:1.0];
     stween.delay = delay;
     [mJuggler addObject:stween];
-    SPTween* stween1 = [SPTween tweenWithTarget:button time:0.1];
-    stween1.delay = delay + stween.time;
-    [stween1 animateProperty:@"scaleY" targetValue:1.1];
-    [stween1 animateProperty:@"y" targetValue:tY + 0.1*button.height];
-    [mJuggler addObject:stween1];
-    SPTween* stween2 = [SPTween tweenWithTarget:button time:stween1.time];
-    stween2.delay = delay + stween.time + stween1.time;
-    [stween2 animateProperty:@"scaleY" targetValue:1.0];
-    [stween2 animateProperty:@"y" targetValue:tY];
-    [mJuggler addObject:stween2];
-    return delay + stween.time + stween1.time;
+    return delay + stween.time;
 }
 
 -(void)onStart:(SPEvent *)event {
-    mPlayground = [[Playground alloc] initWithWidth:self.width andHeight:self.height];
+    mPlayground = [[Playground alloc] initWithWidth:maxWidth andHeight:maxHeight];
     [self addChild:mPlayground];
     [mPlayground addEventListener:@selector(gameover:) atObject:self forType:EVENT_GAMEOVER];
     //[mPlayground release];
@@ -204,7 +240,7 @@ double waves[][11] = {
     counter.kerning = YES;
     counter.color = SP_BLACK;
     [self addChild:counter];
-    counter.x = (self.width - counter.width)/2.0;
+    counter.x = (maxWidth - counter.width)/2.0;
     counter.y = 20;     
     if (val > 0) {
         counter.text = [NSString stringWithFormat:@"%d", val];
@@ -225,8 +261,8 @@ double waves[][11] = {
 }
 
 -(void)startMarathon {
-    //[self nextRound:nil];
-    [mPlayground showClock:7.0];
+    [self nextRound:nil];
+    //[mPlayground showClock:7.0];
  //   [mPlayground addEventListener:@selector(killit:) atObject:self forType:EVENT_TYPE_MOSQUITO_TOUCHED];
     [mPlayground addEventListener:@selector(nextRound:) atObject:self forType:EVENT_CLOCK_ENDED];
 }
@@ -234,30 +270,30 @@ double waves[][11] = {
 -(void)nextRound:(SPEvent *)event {
     double time = 0;
     for (int i = 0; i < waves[currentWave][1]; i++) {
-        [mPlayground launchPacificAtX:arc4random()%(int)(self.width-90) + 15 Y:arc4random()%(int)(self.height-150)+37];
+        [mPlayground launchPacificAtX:arc4random()%(int)(maxWidth-90) + 15 Y:arc4random()%(int)(maxHeight-180)+37];
     }
     for (int i =0; i < waves[currentWave][2]; i++) {
         double prob = (arc4random()%1000/1000.0)*(waves[currentWave][4] - waves[currentWave][3]) + waves[currentWave][3];
         time += prob;
-        [[mInGameJuggler delayInvocationAtTarget:mPlayground byTime:time] launchMosquitoAtX:arc4random()%(int)(self.width-90)+15 Y:arc4random()%(int)(self.height-150)+37 FlyProb:0.75 Life:1 Power:1 Worth:1.5];
+        [[mInGameJuggler delayInvocationAtTarget:mPlayground byTime:time] launchMosquitoAtX:arc4random()%(int)(maxWidth-90)+15 Y:arc4random()%(int)(maxHeight-180)+37 FlyProb:0.75 Life:1 Power:1 Worth:1.5];
     }
     time = 0;
     for (int i =0; i < waves[currentWave][5]; i++) {
         double prob = (arc4random()%1000/1000.0)*(waves[currentWave][7] - waves[currentWave][6]) + waves[currentWave][6];
         time += prob;
-        [[mInGameJuggler delayInvocationAtTarget:mPlayground byTime:time] launchMosquitoAtX:arc4random()%(int)(self.width-90)+15 Y:arc4random()%(int)(self.height-150)+37 FlyProb:0.65 Life:2 Power:2 Worth:3];
+        [[mInGameJuggler delayInvocationAtTarget:mPlayground byTime:time] launchMosquitoAtX:arc4random()%(int)(maxWidth-90)+15 Y:arc4random()%(int)(maxHeight-180)+37 FlyProb:0.65 Life:2 Power:2 Worth:3];
     }
     time = 0;
     for (int i =0; i < waves[currentWave][8]; i++) {
         double prob = (arc4random()%1000/1000.0)*(waves[currentWave][10] - waves[currentWave][9]) + waves[currentWave][9];
         time += prob;
-        [[mInGameJuggler delayInvocationAtTarget:mPlayground byTime:time] launchMosquitoAtX:arc4random()%(int)(self.width-90)+15 Y:arc4random()%(int)(self.height-150)+37 FlyProb:0.50 Life:3 Power:3 Worth:5.3];
+        [[mInGameJuggler delayInvocationAtTarget:mPlayground byTime:time] launchMosquitoAtX:arc4random()%(int)(maxWidth-90)+15 Y:arc4random()%(int)(maxHeight-180)+37 FlyProb:0.50 Life:3 Power:3 Worth:5.3];
     }
     if (currentWave + 1 < totalWave) {
         currentWave++;
-        [[mGameoverJuggler delayInvocationAtTarget:mPlayground byTime:2.0] showClock:waves[currentWave-1][0]];
+        [[mInGameJuggler delayInvocationAtTarget:mPlayground byTime:2.0] showClock:waves[currentWave-1][0]];
     } else {
-        [[mGameoverJuggler delayInvocationAtTarget:mPlayground byTime:2.0] showClock:waves[currentWave][0]];
+        [[mInGameJuggler delayInvocationAtTarget:mPlayground byTime:2.0] showClock:waves[currentWave][0]];
     }
 }
 
@@ -290,17 +326,49 @@ double waves[][11] = {
 }
 
 -(void)onHelp:(SPEvent *)event {
-    
+    HelpImg.visible = YES;
+    SPTween* tween = [SPTween tweenWithTarget:HelpImg time:0.6 transition:SP_TRANSITION_EASE_OUT_BACK];
+    [tween moveToX:0 y:0];
+    [tween animateProperty:@"alpha" targetValue:1.0];
+    [mGameoverJuggler addObject:tween];
+}
+
+-(void) onHelpTouched:(SPTouchEvent *)event {
+    SPTouch* touch = [[event touchesWithTarget:HelpImg andPhase:SPTouchPhaseEnded] anyObject];
+    if (touch) {
+        SPTween* tween = [SPTween tweenWithTarget:HelpImg time:0.4 transition:SP_TRANSITION_EASE_IN_BACK];
+        [tween moveToX:maxWidth y:0];
+        [tween animateProperty:@"alpha" targetValue:0.0];
+        [mGameoverJuggler addObject:tween];
+        [[mGameoverJuggler delayInvocationAtTarget:HelpImg byTime:0.4] setVisible:NO];
+    }
 }
 
 -(void)onCredits:(SPEvent *)event {
-    
+    CreditsSprt.visible = YES;
+    SPTween* tween = [SPTween tweenWithTarget:CreditsSprt time:0.6 transition:SP_TRANSITION_EASE_OUT_BACK];
+    [tween moveToX:0 y:0];
+    [tween animateProperty:@"alpha" targetValue:1.0];
+    [mGameoverJuggler addObject:tween];    
+}
+
+-(void)onCreditsTouched:(SPTouchEvent *)event {
+    SPTouch* touch = [[event touchesWithTarget:CreditsSprt andPhase:SPTouchPhaseEnded] anyObject];
+    if (touch) {
+        SPTween* tween = [SPTween tweenWithTarget:CreditsSprt time:0.4 transition:SP_TRANSITION_EASE_IN_BACK];
+        [tween moveToX:maxWidth y:0];
+        [tween animateProperty:@"alpha" targetValue:0.0];
+        [mGameoverJuggler addObject:tween];
+        [[mGameoverJuggler delayInvocationAtTarget:CreditsSprt byTime:0.4] setVisible:NO];
+    }
 }
 
 -(void) advanceTime:(double) seconds {
     [mGameoverJuggler advanceTime:seconds];
     if (mPlayground) {
-        [mInGameJuggler advanceTime:seconds];
+        if (!mPlayground.stop) {
+            [mInGameJuggler advanceTime:seconds];
+        }
         [mPlayground advanceTime:seconds];
     } else {
         [mJuggler advanceTime:seconds];

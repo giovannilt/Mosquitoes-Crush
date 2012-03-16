@@ -30,7 +30,7 @@
     [mJuggler removeAllObjects];
     self.alpha = 1.0;
     SPTween* tween = [SPTween tweenWithTarget:pg.life time:0.2f];
-    int newValue = pg.life.value + 10;
+    int newValue = pg.life.value + 5;
     if (newValue > 100) { newValue = 100; }
     [tween animateProperty:@"value" targetValue:newValue];
     [pg.juggler addObject:tween];

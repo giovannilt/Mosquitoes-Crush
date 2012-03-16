@@ -42,7 +42,7 @@
 
 @implementation Playground
 
-@synthesize statsHeight, colors, juggler = mJuggler, canSuck, life, TOTAL, mustBurn, gifts;
+@synthesize statsHeight, colors, juggler = mJuggler, canSuck, life, TOTAL, mustBurn, gifts, stop;
 
 - (id)initWithWidth:(float) width andHeight:(float) height
 {
@@ -102,6 +102,7 @@
         clockClip.width = clockClip.width*0.7;
         clockClip.height = clockClip.height*0.7;
         clockClip.x = self.width/2.0 - clockClip.width/2.0;
+        [clockClip pause];
         clockClip.y = 1;
         [self addChild:clockClip];
         [mClockJuggler addObject:clockClip];
@@ -321,7 +322,7 @@
     double probKind = arc4random()%1000/1000.0;
     double s = 0;
     NSString* arr[] = {@"HeartGift", @"LightningGift", @"SprayGift"};
-    double dist[] = {0.6, 0.3, 0.1};
+    double dist[] = {0.7, 0.25, 0.05};
     int tot = 3;
     for (int i =0; i < tot; i++) {
         s += dist[i];
@@ -334,10 +335,10 @@
 
 -(void)placeGiftAtX:(double)x Y:(double)y Width:(double)w andHeight:(double)h{
     double probGift = arc4random()%1000/1000.0;
-    if (probGift < 0.5) {
+    if (probGift <= 0.85) {
         double oW = w, oH = h;
-        w = w*0.8;
-        h = h*0.8;
+        w = w*0.6;
+        h = h*0.6;
         x = x + (oW - w)/2.0;
         y = y + (oH - h)/2.0;
         GiftSprite* gift = [self selectGiftWithWidth:w Height:h];

@@ -43,6 +43,7 @@
 @property(nonatomic, retain) NumberField* life;
 @property(nonatomic, assign) BOOL mustBurn;
 @property(nonatomic, readonly) NSMutableArray* gifts;
+@property(nonatomic, readonly) BOOL stop;
 
 - (id)initWithWidth:(float) width andHeight:(float) height;
 

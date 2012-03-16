@@ -39,8 +39,8 @@
 		F9D660141507A72B001B9D9B /* SuckedEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = F9D660131507A72B001B9D9B /* SuckedEvent.m */; };
 		F9D660211507BA3D001B9D9B /* GameOver.m in Sources */ = {isa = PBXBuildFile; fileRef = F9D660201507BA3D001B9D9B /* GameOver.m */; };
 		F9DD642D150F3EED005B6AC7 /* GiftSprite.m in Sources */ = {isa = PBXBuildFile; fileRef = F9DD642C150F3EED005B6AC7 /* GiftSprite.m */; };
-		F9E6558C15134BA000CEC463 /* atlas.png in Resources */ = {isa = PBXBuildFile; fileRef = F9E6558A15134BA000CEC463 /* atlas.png */; };
-		F9E6558D15134BA000CEC463 /* atlas.xml in Resources */ = {isa = PBXBuildFile; fileRef = F9E6558B15134BA000CEC463 /* atlas.xml */; };
+		F9E6559A1513D27300CEC463 /* atlas.png in Resources */ = {isa = PBXBuildFile; fileRef = F9E655981513D27300CEC463 /* atlas.png */; };
+		F9E6559B1513D27300CEC463 /* atlas.xml in Resources */ = {isa = PBXBuildFile; fileRef = F9E655991513D27300CEC463 /* atlas.xml */; };
 		F9EA7069150F8D93004D868B /* HeartGift.m in Sources */ = {isa = PBXBuildFile; fileRef = F9EA7068150F8D92004D868B /* HeartGift.m */; };
 /* End PBXBuildFile section */
 
@@ -118,8 +118,8 @@
 		F9D660201507BA3D001B9D9B /* GameOver.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GameOver.m; sourceTree = "<group>"; };
 		F9DD642B150F3EED005B6AC7 /* GiftSprite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GiftSprite.h; sourceTree = "<group>"; };
 		F9DD642C150F3EED005B6AC7 /* GiftSprite.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GiftSprite.m; sourceTree = "<group>"; };
-		F9E6558A15134BA000CEC463 /* atlas.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = atlas.png; sourceTree = "<group>"; };
-		F9E6558B15134BA000CEC463 /* atlas.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = atlas.xml; sourceTree = "<group>"; };
+		F9E655981513D27300CEC463 /* atlas.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = atlas.png; sourceTree = "<group>"; };
+		F9E655991513D27300CEC463 /* atlas.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = atlas.xml; sourceTree = "<group>"; };
 		F9EA7067150F8D92004D868B /* HeartGift.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HeartGift.h; sourceTree = "<group>"; };
 		F9EA7068150F8D92004D868B /* HeartGift.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HeartGift.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -249,8 +249,8 @@
 		F9A1A37015012DAE00F99E73 /* Images */ = {
 			isa = PBXGroup;
 			children = (
-				F9E6558A15134BA000CEC463 /* atlas.png */,
-				F9E6558B15134BA000CEC463 /* atlas.xml */,
+				F9E655981513D27300CEC463 /* atlas.png */,
+				F9E655991513D27300CEC463 /* atlas.xml */,
 				F96CBAFB151137C600B75619 /* atwregular.fnt */,
 				F96CBAFC151137C600B75619 /* atwregular.png */,
 				F96CBAF71511375000B75619 /* atwbold.fnt */,
@@ -345,8 +345,8 @@
 				F96CBAFA1511375000B75619 /* atwbold.png in Resources */,
 				F96CBAFD151137C600B75619 /* atwregular.fnt in Resources */,
 				F96CBAFE151137C600B75619 /* atwregular.png in Resources */,
-				F9E6558C15134BA000CEC463 /* atlas.png in Resources */,
-				F9E6558D15134BA000CEC463 /* atlas.xml in Resources */,
+				F9E6559A1513D27300CEC463 /* atlas.png in Resources */,
+				F9E6559B1513D27300CEC463 /* atlas.xml in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
